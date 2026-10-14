@@ -13,6 +13,12 @@ interface InstitutionSourceRow {
   tel_fono_domicilio?: string;
   estado?: string;
   p_gina_web?: string;
+  principal_seccional?: string;
+}
+
+interface ProgramInstitutionRow {
+  codigoinstitucion?: string;
+  nombremetodologia?: string;
 }
 
 const SELECT_FIELDS = [
@@ -26,6 +32,7 @@ const SELECT_FIELDS = [
   "tel_fono_domicilio",
   "estado",
   "p_gina_web",
+  "principal_seccional",
 ].join(",");
 
 function escapeSoql(value: string): string {
@@ -65,12 +72,86 @@ function transformInstitution(row: InstitutionSourceRow): Institution {
     phone: row.tel_fono_domicilio ?? "",
     status: row.estado ?? "",
     website: row.p_gina_web ?? "",
+    campus: row.principal_seccional ?? "",
   };
 }
 
-export async function getInstitutions(filters: InstitutionFilters): Promise<Institution[]> {
+let catalogCache: { expiresAt: number; data: Map<string, Institution> } | undefined;
+let catalogRequest: Promise<Map<string, Institution>> | undefined;
+export function clearInstitutionCatalogCache() { catalogCache = undefined; catalogRequest = undefined; }
+export function getInstitutionCatalog(): Promise<Map<string, Institution>> {
+  if (catalogCache && catalogCache.expiresAt > Date.now()) return Promise.resolve(catalogCache.data);
+  if (catalogRequest) return catalogRequest;
+  catalogRequest = (async () => {
+    const url = new URL(SOURCES.institutions.resourceUrl);
+    url.searchParams.set('$select', SELECT_FIELDS);
+    url.searchParams.set('$limit', '50000');
+    const rows = await fetchJson<InstitutionSourceRow[]>(url);
+    if (!Array.isArray(rows) || rows.length >= 50000) throw new Error('Catálogo institucional incompleto');
+    const data = new Map(rows.filter(row => /^\d+$/.test(row.c_digo_instituci_n ?? '')).map(row => [row.c_digo_instituci_n!, transformInstitution(row)]));
+    catalogCache = { data, expiresAt: Date.now() + 5 * 60 * 1000 };
+    return data;
+  })().finally(() => { catalogRequest = undefined; });
+  return catalogRequest;
+}
+
+function exactText(field: string, value: string): string {
+  return `upper(${field}) = '${escapeSoql(value.trim().toUpperCase())}'`;
+}
+
+function codesWhere(field: string, codes: string[]): string {
+  return `${field} in(${codes.map((code) => `'${code}'`).join(",")})`;
+}
+
+async function getMatchingInstitutionCodes(filters: InstitutionFilters): Promise<string[] | null> {
+  const program = filters.program?.trim();
+  const modality = filters.modality?.trim();
+  if (!program && !modality) return null;
+
+  const url = new URL(SOURCES.programs.resourceUrl);
+  const conditions: string[] = ["nombreestadoprograma = 'Activo'"];
+  if (program) {
+    conditions.push(`(${[
+      "nombreprograma", "nombrenbc", "nombretituloobtenido",
+    ].map((field) => `(${containsText(field, program)})`).join(" OR ")})`);
+  }
+  if (modality) conditions.push(exactText("nombremetodologia", modality));
+
+  url.searchParams.set("$select", "codigoinstitucion");
+  url.searchParams.set("$group", "codigoinstitucion");
+  url.searchParams.set("$where", conditions.join(" AND "));
+  url.searchParams.set("$limit", "5000");
+  const rows = await fetchJson<ProgramInstitutionRow[]>(url);
+  if (rows.length === 5000) throw new Error("Demasiadas instituciones para filtrar con seguridad");
+  return rows.map((row) => row.codigoinstitucion ?? "").filter((code) => /^\d+$/.test(code));
+}
+
+async function getModalitiesByInstitution(codes: string[]): Promise<Map<string, string[]>> {
+  const modalities = new Map<string, string[]>();
+  const validCodes = codes.filter((code) => /^\d+$/.test(code));
+  if (validCodes.length === 0) return modalities;
+
+  const url = new URL(SOURCES.programs.resourceUrl);
+  url.searchParams.set("$select", "codigoinstitucion,nombremetodologia");
+  url.searchParams.set("$where", `${codesWhere("codigoinstitucion", validCodes)} AND nombreestadoprograma = 'Activo' AND nombremetodologia is not null`);
+  url.searchParams.set("$group", "codigoinstitucion,nombremetodologia");
+  url.searchParams.set("$limit", "5000");
+  const rows = await fetchJson<ProgramInstitutionRow[]>(url);
+  if (rows.length === 5000) throw new Error("Demasiadas modalidades para mostrar con seguridad");
+  for (const row of rows) {
+    if (!row.codigoinstitucion || !row.nombremetodologia?.trim()) continue;
+    const current = modalities.get(row.codigoinstitucion) ?? [];
+    current.push(row.nombremetodologia.trim());
+    modalities.set(row.codigoinstitucion, current);
+  }
+  return modalities;
+}
+
+export async function getInstitutions(filters: InstitutionFilters, lookahead = false): Promise<Institution[]> {
   const url = new URL(SOURCES.institutions.resourceUrl);
   const conditions: string[] = [];
+  const programInstitutionCodes = await getMatchingInstitutionCodes(filters);
+  if (programInstitutionCodes?.length === 0) return [];
 
   if (filters.name?.trim()) {
     conditions.push(`(${containsText("nombre_instituci_n", filters.name)})`);
@@ -78,9 +159,16 @@ export async function getInstitutions(filters: InstitutionFilters): Promise<Inst
   if (filters.municipality?.trim()) {
     conditions.push(`(${containsText("municipio_domicilio", filters.municipality)})`);
   }
+  if (filters.sector?.trim()) conditions.push(exactText("sector", filters.sector));
+  if (filters.academicCharacter?.trim()) {
+    conditions.push(exactText("car_cter_acad_mico", filters.academicCharacter));
+  }
+  if (programInstitutionCodes) {
+    conditions.push(codesWhere("c_digo_instituci_n", programInstitutionCodes));
+  }
 
   url.searchParams.set("$select", SELECT_FIELDS);
-  url.searchParams.set("$limit", String(filters.limit));
+  url.searchParams.set("$limit", String(filters.limit + (lookahead ? 1 : 0)));
   url.searchParams.set("$offset", String((filters.page - 1) * filters.limit));
   url.searchParams.set("$order", "c_digo_instituci_n,:id");
   if (conditions.length > 0) {
@@ -88,7 +176,13 @@ export async function getInstitutions(filters: InstitutionFilters): Promise<Inst
   }
 
   const rows = await fetchJson<InstitutionSourceRow[]>(url);
-  return rows.map(transformInstitution);
+  const institutions = rows.map(transformInstitution);
+  if (!filters.includeModalities) return institutions;
+  const modalities = await getModalitiesByInstitution(institutions.map((institution) => institution.code));
+  return institutions.map((institution) => ({
+    ...institution,
+    modalities: modalities.get(institution.code) ?? [],
+  }));
 }
 
 export async function getInstitutionByCode(code: string): Promise<Institution | null> {

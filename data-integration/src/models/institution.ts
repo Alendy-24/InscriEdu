@@ -9,11 +9,18 @@ export interface Institution {
   phone: string;
   status: string;
   website: string;
+  campus: string;
+  modalities?: string[];
 }
 
 export interface InstitutionFilters {
   name?: string;
   municipality?: string;
+  modality?: string;
+  program?: string;
+  sector?: string;
+  academicCharacter?: string;
+  includeModalities?: boolean;
   page: number;
   limit: number;
 }

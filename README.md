@@ -1,146 +1,241 @@
-# EduPlan
+# Cómo ejecutar EduPlan con el asistente virtual
 
-Official repository for EduPlan for IT Project from Pontificia Universidad Javeriana Bogotá.
+Guía para levantar el proyecto en un computador nuevo (Windows / PowerShell) con el chatbot funcionando.
 
-## Integración de catálogos
+## Requisitos
 
-Spring Boot consume el JSON de `data-integration` y persiste instituciones y programas en PostgreSQL.
-La API TypeScript consulta Datos Abiertos; no tiene credenciales ni acceso a la base.
+- Git
+- Java 21 o superior
+- Node.js `^20.19` o `>=22.12`
+- PostgreSQL con una base de datos vacía llamada `eduplan_db`
+- Una API key propia de Groq (se crea en <https://console.groq.com/keys>)
 
-### Preparación y ejecución local
+> Cada persona debe crear su propia API key. Nunca subas keys, contraseñas ni tokens al repositorio.
 
-Requisitos: JDK 21 (con `JAVA_HOME` configurado), Node.js 22 o superior y PostgreSQL 14 o superior.
-Los comandos parten de la raíz de EduPlan salvo que se indique lo contrario.
-
-Para usar una base aislada en Docker desde WSL, seguir
-[`docker/README.md`](docker/README.md). Esa configuración usa el puerto `5433`
-para no interferir con PostgreSQL nativo en `5432` y mantiene las credenciales
-locales fuera de Git.
-
-En una terminal, iniciar la API:
+## 1. Clonar el repositorio
 
 ```powershell
-cd data-integration
-npm.cmd ci
-npm.cmd run build
-npm.cmd start
+git clone https://github.com/Alendy-24/EduPlan
+cd EduPlan
+git checkout <rama-del-asistente>
 ```
 
-En otra terminal, configurar el backend con una base PostgreSQL ya creada:
+## 2. Terminal 1: backend (Spring Boot)
 
 ```powershell
+cd backend\src
 $env:DB_URL = 'jdbc:postgresql://localhost:5432/eduplan_db'
 $env:DB_USER = 'postgres'
-$env:DB_PASSWORD = '<contraseña de PostgreSQL>'
-$env:DATA_SYNC_ADMIN_TOKEN = '<secreto aleatorio de al menos 32 bytes>'
-cd backend/src
+$env:DB_PASSWORD = '<TU_CLAVE_DE_POSTGRES>'
+$env:DATA_SYNC_ADMIN_TOKEN = '<TOKEN_ADMIN_GENERADO>'
+$env:JWT_SECRET = [guid]::NewGuid().ToString('N') + [guid]::NewGuid().ToString('N')
+$env:GROQ_API_KEY = '<TU_API_KEY_DE_GROQ>'
 .\mvnw.cmd spring-boot:run
 ```
 
-Se puede generar el token con `[guid]::NewGuid().ToString('N') + [guid]::NewGuid().ToString('N')`.
-Configurar el mismo valor en la terminal del cliente; no guardarlo en Git. Spring lee las variables
-del proceso: un archivo `.env` por sí solo no las carga. La contraseña anteriormente guardada en
-el repositorio debe reemplazarse en PostgreSQL; quitarla del archivo no la elimina del historial.
+Notas:
 
-En este equipo también se dejó un JDK portátil dentro de `.tools/jdk21/`, excluido de Git.
-Se puede apuntar `JAVA_HOME` al directorio de ese JDK; no se cambió Java del sistema.
+- `DATA_SYNC_ADMIN_TOKEN` se puede generar con `[guid]::NewGuid().ToString('N') + [guid]::NewGuid().ToString('N')`.
+- `JWT_SECRET` se genera nuevo en cada arranque con el comando de arriba. Si cambia, hay que volver a iniciar sesión en la app.
+- Las tablas se crean solas al arrancar (Flyway).
 
-### Primera migración de una base existente
-
-En una base vacía, Flyway ejecuta V1 y V2 automáticamente. Hibernate usa `validate` y ya no altera tablas.
-
-Si la base fue creada previamente con Hibernate, hacer un respaldo y revisar las migraciones
-en `backend/src/main/resources/db/migration`. Para adoptar ese esquema original, establecer
-`$env:DB_BASELINE_EXISTING = 'true'` solamente en el primer arranque. El baseline es **0**,
-por lo que V1 y V2 se ejecutan: crean tablas faltantes y agregan/amplían columnas sin borrar filas.
-Luego retirar esa variable. Esquemas personalizados deben conciliarse antes; una estructura
-incompatible o códigos duplicados causarán un error explícito en lugar de corregirse borrando datos.
-
-Si alguna vez se ejecutó la versión anterior con claves SHA-256, la importación de programas
-se detiene para que esos registros se concilien con la fuente. No es posible recuperar de un hash
-las filas que ya se sobreescribieron. La migración conserva esos registros y sus relaciones.
-
-### Sincronizar
-
-Con ambos servicios activos, enviar la credencial mediante el encabezado `X-Sync-Token`:
+## 3. Terminal 2: catálogo (data-integration)
 
 ```powershell
-# En la terminal del cliente: configurar DATA_SYNC_ADMIN_TOKEN con el mismo valor del backend.
-Invoke-RestMethod -Method Post -Uri 'http://localhost:8080/api/admin/data-sync' `
-  -Headers @{ 'X-Sync-Token' = $env:DATA_SYNC_ADMIN_TOKEN }
+cd data-integration
+npm install
+$env:PORT = '3001'
+npm run dev
 ```
 
-| Operación | Endpoint |
-| --- | --- |
-| Instituciones y luego programas | `POST /api/admin/data-sync` |
-| Solo instituciones | `POST /api/admin/data-sync/institutions` |
-| Solo programas (instituciones deben existir) | `POST /api/admin/data-sync/programs` |
+El puerto `3001` debe coincidir con el proxy de `frontend/vite.config.js`. Para comprobar que responde: <http://127.0.0.1:3001/health>.
 
-Sin token configurado de al menos 32 bytes, la operación devuelve 503. Sin credencial correcta,
-devuelve 401 antes de escribir. En despliegues remotos usar HTTPS y restringir esta ruta administrativa.
-La protección pertenece a estas operaciones; no implementa un sistema de login para el resto de EduPlan.
-
-La solicitud es síncrona y una carga completa puede tardar varios minutos. Un bloqueo de PostgreSQL
-impide sincronizaciones simultáneas incluso entre instancias del backend; otra petición recibe 409.
-Cada página se confirma en su propia transacción. No se mantiene una transacción durante la consulta HTTP.
-
-El reporte devuelve `pages`, `created`, `updated`, `skipped`, `reviewRequired` y `skippedReasons`.
-`updated` cuenta registros existentes procesados, incluso si su contenido no cambió.
-Las razones de omisión son `invalidRecord`, `duplicateInstitutionCode` y `missingInstitution`.
-No se crean programas huérfanos. Los omitidos por institución faltante pueden importarse después
-de resolver su institución. No se infieren vínculos por nombre.
-
-Un error devuelve `committedProgress` con las páginas confirmadas antes del fallo. Puede repetirse
-la petición: el registro con la misma identidad se actualiza y conserva su ID local, costo,
-requisitos y descripción. No se eliminan registros ausentes de la fuente.
-
-### Identidad y calidad de la fuente
-
-- Instituciones: `codigo_fuente` corresponde al código de institución.
-- Programas: `clave_fuente` guarda `upr9-nkiz:<:id de Socrata>`. El código publicado se conserva
-  en `codigo_fuente`, pero **no se trata como un código SNIES validado ni como una clave única**.
-- Filas diferentes con el mismo código, institución, municipio y modalidad permanecen separadas.
-- Si el nombre está vacío, es NA/N/A o coincide con departamento/municipio, se conserva en
-  `nombre_original`, se guarda el título en `titulo_otorgado` y se marca `requiere_revision=true`.
-  `nombre` usa ese título con `origen_nombre=AWARDED_TITLE`; no es un nombre oficial certificado.
-  Si tampoco hay título, se usa una etiqueta de pendiente con `origen_nombre=UNAVAILABLE`.
-- Esta detección es una regla limitada de calidad, no una validación semántica completa.
-  El consumidor debe mostrar el origen y la advertencia al presentar nombres pendientes.
-- No se mezclan valores ni se deducen nombres de carreras a partir de un título.
-
-El orden incluye un identificador único para paginar, como recomienda
-[Socrata](https://dev.socrata.com/docs/queries/order).
-No existe una instantánea transaccional entre páginas HTTP: si el proveedor cambia el dataset
-durante la carga, se debe repetir la sincronización. Si reemplaza filas y regenera `:id`,
-hay que conciliar las identidades antes de otra carga; no se garantiza identidad perpetua.
-Esta integración conserva filas publicadas, no asegura que cada fila represente una carrera distinta.
-
-### Configuración adicional
-
-| Variable | Predeterminado |
-| --- | --- |
-| `DATA_INTEGRATION_BASE_URL` | `http://localhost:3001` |
-| `DATA_INTEGRATION_PAGE_SIZE` | `100` (1–100) |
-| `DATA_INTEGRATION_MAX_PAGES` | `5000` (límite para detectar cargas anómalas) |
-| `DB_BASELINE_EXISTING` | `false` |
-| `DATA_SYNC_ADMIN_TOKEN` | Sin valor: sincronización deshabilitada |
-| `DB_PASSWORD` | Obligatoria |
-
-El cliente HTTP tiene 3 segundos para conectar y 15 segundos de espera de lectura.
-Alcanzar el límite de páginas se informa como carga incompleta, no como éxito.
-
-### Verificación
+## 4. Terminal 3: frontend
 
 ```powershell
-# Desde data-integration
-npm.cmd test
-
-# Desde backend/src con JDK 21
-.\mvnw.cmd -B -ntp test
+cd frontend
+npm install
+npm run dev
 ```
 
-Las pruebas Java inician un PostgreSQL temporal en un puerto disponible y un servidor HTTP local
-con datos controlados. Ignoran DB_URL y no usan eduplan_db. Prueban migraciones, validación JPA,
-colisiones de identidad, actualización, rollback, fallos parciales, paginación, concurrencia
-y autorización HTTP. Cierran la base temporal al finalizar. Las primeras ejecuciones descargan
-dependencias y binarios de prueba; no requieren Docker.
+La app queda en <http://localhost:3005>.
+
+## 5. Probar el asistente
+
+1. Regístrate o inicia sesión (el asistente solo funciona con sesión iniciada).
+2. Abre la burbuja de chat.
+3. Pregunta algo, por ejemplo: "¿Cómo comparo dos programas?".
+
+## Solución de problemas
+
+| Síntoma | Causa probable | Solución |
+|---|---|---|
+| `Could not resolve placeholder 'JWT_SECRET'` (u otra variable) | La variable no está definida en esa terminal | Definirla antes de ejecutar `mvnw` |
+| `Could not resolve placeholder 'assistant.*'` | Faltan las líneas del asistente en `application.properties` | Agregar `assistant.base-url`, `assistant.api-key` y `assistant.model` |
+| 404 en `/api/assistant/chat` | Falta `/api/assistant` en el proxy de Vite | Agregarlo en `frontend/vite.config.js` y reiniciar el frontend |
+| 502 en `/api/institutions` | `data-integration` no está corriendo | Ejecutar la Terminal 2 con `PORT = 3001` |
+| "El asistente no está disponible" | Error de Groq (key, modelo o límite) | Revisar la consola del backend |
+| 401 en el chat | Sesión vencida o no iniciada | Volver a iniciar sesión |
+
+## Configuración del asistente
+
+En `backend/src/main/resources/application.properties`:
+
+```properties
+assistant.base-url=https://api.groq.com/openai/v1
+assistant.api-key=${GROQ_API_KEY}
+assistant.model=openai/gpt-oss-20b
+```
+
+Cierra la sesión y vuelve a entrar. Si usas WSL, puedes ejecutar
+`wsl --shutdown` en PowerShell y volver a abrir WSL. Estos son pasos manuales:
+EduPlan nunca ejecuta sudo ni modifica permisos.
+
+### Bases creadas con el flujo anterior
+
+La base Docker anterior se reutiliza si existe wsl-database.json; sus credenciales
+se conservan en docker-database.json. El flujo nativo antiguo de Windows en
+55432 se deja intacto y no se migra ni se detiene automáticamente. Puedes usarlo
+mediante las tres variables DB_* si necesitas conservar ese entorno. Si existe
+un volumen Docker sin sus credenciales, recupera el archivo original; no borres
+el volumen para resolver un error de contraseña. Consulta [Docker](docker/README.md).
+
+## Arquitectura y funcionalidad
+
+EduPlan usa React/Vite y el catálogo real
+de instituciones. Programas consulta data-integration; universidad, área, nivel,
+departamento, ciudad, modalidades, nivel de formación, tipo de institución y orden
+se aplican a todo el catálogo antes de paginar. Las modalidades admiten selección
+múltiple (cualquiera de las elegidas), combinada con los demás filtros. Se envían
+como parámetros repetidos `modality=Presencial&modality=Virtual`; los enlaces
+anteriores con una sola modalidad siguen funcionando.
+`GET /api/programs/filters` obtiene las opciones oficiales y las conserva cinco
+minutos. La búsqueda prioriza nombre/título exacto, variantes similares y área.
+La búsqueda ofrece hasta ocho sugerencias de nombres oficiales, tolera omisiones
+y letras intercambiadas, y conserva los nombres publicados. Las sugerencias se filtran por
+nivel e institución. Departamento y ciudad se seleccionan de DIVIPOLA; al cambiar
+de departamento se limpia la ciudad; al cambiar el nivel académico se restablece
+la formación. Universidad, área, formación y tipo de institución están en «Más
+filtros». El sector se obtiene del catálogo institucional: «Oficial» se muestra
+como pública y «Privado» como privada. Si esa fuente falla, una búsqueda por
+sector informa el error en lugar de mostrar un falso resultado vacío. Los filtros
+se conservan en la URL y cada etiqueta permite quitar una selección individual.
+El orden predeterminado es por relevancia; también se puede ordenar por nombre
+o universidad A–Z, sobre todo el catálogo antes de paginar.
+Los resultados incluyen el total de ofertas y cantidades por filtro sobre todo
+el catálogo. Cada cantidad permite cambiar ese filtro conservando los demás;
+el departamento ignora la ciudad porque cambiarlo la limpia. Las búsquedas vacías
+ofrecen acciones con cantidades verificadas para ampliar los filtros conservando
+la carrera. Las filas con la misma identidad oficial SNIES y los mismos datos de
+oferta se agrupan antes de paginar; sedes, modalidades, estados y planes diferentes
+se conservan por separado. El detalle mantiene todas las filas de fuente.
+El comparador organiza ubicación, modalidad/tiempo y formación, resalta diferencias
+y conserva visibles los datos pendientes. Consulta las filas actuales por su identidad
+exacta al abrir o actualizar; si una fila desaparece o la consulta falla, conserva el
+resumen guardado y señala su estado. Incluye créditos, sector, sede, título y formación,
+y accesos a fuentes oficiales para confirmar costos, admisión y plan de estudios.
+«Mis prioridades» destaca ubicación, modalidad, duración y formación; las filas
+prioritarias siguen visibles al ocultar coincidencias. Las notas por programa son
+personales, están limitadas a 2000 caracteres y se guardan solo en el navegador,
+separadas por cuenta e invitado. No se envían a las API ni se presentan como datos oficiales.
+La favorita de la comparación también es local y se conserva por cuenta; quitar
+esa opción o limpiar la comparación borra la favorita. El resumen destaca hasta
+cuatro diferencias publicadas, prioriza los criterios elegidos y señala los datos
+pendientes sin inferir cuál universidad es mejor. «Compartir comparación» permite
+copiar o descargar un archivo de texto con las ofertas y sus enlaces exactos,
+sin incluir notas ni la favorita. Si el portapapeles no está disponible, la vista
+previa permite copiar manualmente. Los enlaces usan el origen actual del sitio.
+Una barra de comparación en el catálogo y el detalle muestra hasta tres opciones,
+permite quitarlas y reconoce distintas filas de la misma oferta agrupada.
+Los resúmenes mantienen los nombres publicados y su procedencia. Las filas se
+identifican por `sourceId`, porque un código de programa puede repetirse.
+
+El navegador usa rutas del mismo origen. Vite envía instituciones, programas y
+recomendaciones a data-integration; autenticación, cuenta y enlaces oficiales
+al backend. Flyway aplica migraciones y Hibernate valida el esquema.
+
+Las tarjetas de instituciones admiten logos de Logo.dev con una clave publicable
+opcional, identidades compartidas entre sedes y excepciones manuales. Sin clave
+o ante errores conservan el icono genérico. Consulta la
+[configuración y revisión de logos](docs/institution-logos.md).
+
+Login y registro usan autenticación real. Registro requiere `name`, `email`
+y `password` desde la interfaz; la API conserva soporte de teléfono.
+`expiresIn` está expresado en milisegundos. La sesión se conserva en
+`sessionStorage` hasta su vencimiento; cerrar sesión elimina esa sesión local,
+sin revocación del JWT ni refresh. `/dashboard` y `/perfil` requieren sesión.
+La restauración usa la respuesta de autenticación y su vencimiento; las API
+personales comprueban el JWT y la cuenta activa, y un rechazo 401 invalida la sesión. OAuth y recuperación no
+están disponibles. La protección React no sustituye autorización de backend.
+
+Guardados e intereses se sincronizan por cuenta mediante `/api/me/saved` y
+`/api/me/interests`. La migración V5 crea tablas personales independientes del
+catálogo importado. Cada solicitud usa la cuenta firmada en el JWT, con
+validación de enlaces, resúmenes y opciones personales. Los cambios pendientes
+se conservan localmente y se reintentan; si el almacenamiento está bloqueado,
+se conservan en memoria durante la visita. Los guardados locales anteriores de
+esa cuenta se migran al servidor. Los datos de invitado nunca se transfieren.
+La comparación (máximo tres) continúa local, separada por cuenta.
+
+Desde el dashboard se pueden comprobar cambios en resúmenes guardados contra
+el catálogo actual y actualizarlos explícitamente. Programas muestra el sitio
+institucional publicado por MEN y preguntas para verificar costos/admisión;
+no inventa información académica ausente. Los enlaces específicos se muestran
+cuando han sido verificados en el registro independiente de enlaces oficiales.
+Consulta [el flujo de recopilación y revisión](docs/program-links.md).
+
+Becas contiene una selección editorial de ocho programas reales en
+`frontend/src/data/scholarships.js`, con requisitos, cobertura, fuente oficial,
+calendario y fecha de revisión. Su actualización es manual: deben revisarse las
+fuentes y `verifiedAt` al editar convocatorias. Las fechas pasadas se muestran
+cerradas y las fechas desconocidas exigen consultar vigencia. Las rutas
+históricas de demostración mantienen datos ficticios aislados y avisos.
+
+## Pruebas
+
+Desde la raíz: `npm run test:dev`, `npm run typecheck --prefix data-integration`,
+`npm run lint --prefix frontend`,
+`npm run build --prefix frontend`, `node --test frontend/tests/*.test.mjs` y
+`npm run test --prefix data-integration`. Desde `backend/src`:
+`./mvnw test` (Windows: `.\mvnw.cmd test`) con JDK 21+ (la configuración JWT de pruebas ya está aislada). Las pruebas Java crean PostgreSQL embebido aislado; no usan la base
+de desarrollo para insertar cuentas ni ejecutar migraciones.
+
+`frontend/tests/browser-smoke.mjs` verifica comportamiento UI con fixtures
+de red explícitos: requiere Vite activo y Playwright disponible en el entorno
+de pruebas (o `EDUPLAN_PLAYWRIGHT_PATH` apuntando a un módulo ya instalado).
+La URL predeterminada es http://localhost:3005 y puede cambiarse con
+EDUPLAN_TEST_URL. No es un fallback de datos de la aplicación. Usa Edge headless y genera
+capturas en `.tools/qa`, ignorado por Git. Comprueba 1440, 1024, 768 y 390 px.
+
+### Publicación posterior
+
+Servir el build con fallback de SPA a `index.html`, y reverse proxy del mismo
+origen para `/api/institutions`, `/api/programs`, `/api/recommendations`, `/api/auth`, `/api/me` y `/api/program-links` hacia sus servicios.
+No publicar asumiendo que `vite preview` proporciona un proxy de producción.
+La configuración CORS actual de integración solo cubre instituciones; no
+cambiar programas a una URL de otro origen sin preparar ese transporte.
+
+## Integrantes
+- Salomé Ávila
+- Daniel Cedeño
+- Jose Cepeda
+- Alejandro Corredor
+- Sebastian Ramirez
+
+## Diagramas
+
+# Diagrama de Clases
+
+<img width="848" height="646" alt="diagrama-de-clases-EduPlan" src="https://github.com/user-attachments/assets/f019621b-fc38-402c-8a10-9cfe1f6f1d98" />
+
+# Diagrama Entidad-Relación
+
+<img width="1600" height="657" alt="diagrama-entidad-relacion" src="https://github.com/user-attachments/assets/64658d2d-fad4-41ea-a636-f6333e58bb18" />
+
+# Diagrama Relacional
+
+<img width="1600" height="983" alt="diagrama-relacional" src="https://github.com/user-attachments/assets/95501677-0901-4fa9-be1f-bd155dda5a0d" />
+
+# Diagrama de Componentes 
+
+<img width="1667" height="886" alt="Diagrama_de_Componentes_EduPlan" src="https://github.com/user-attachments/assets/79628769-47d6-415b-9e11-fe3d106ece6b" />

@@ -12,23 +12,37 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "cuenta")
 public class Cuenta {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cuenta")
-    private Long id_cuenta;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id_cuenta")
+  private Long idCuenta;
 
-    @Column(length = 80, nullable = false)
-    private String correo;
+  @Column(name = "nombre", nullable = false, length = 120)
+  private String nombre;
 
-    @Column(length = 80, nullable = false)
-    private String contrasena;
+  @Column(name = "correo", length = 80)
+  private String correo;
 
-    @Column(nullable = false)
-    private boolean estado;
+// Para ingresar con telefono, opcional
+  @Column(name = "telefono", length = 30)
+  private String telefono;
 
-    @Column(nullable = false)
-    private LocalDateTime fecha_registro;
+  @Column(name = "contrasena", nullable = false, length = 255)
+  private String contrasena;
 
-    @OneToOne(mappedBy = "cuenta", cascade = CascadeType.ALL)
-    private Estudiante estudiante;
+  @Column(name = "estado", nullable = false)
+  private boolean estado;
+
+  @Column(name = "fecha_registro", nullable = false, updatable = false)
+  private LocalDateTime fechaRegistro;
+
+  @OneToOne(mappedBy = "cuenta", cascade = CascadeType.ALL)
+  private Estudiante estudiante;
+
+  @PrePersist
+  protected void onCreate(){
+    if(fechaRegistro == null) {
+      fechaRegistro = LocalDateTime.now();
+    }
+  }
 }

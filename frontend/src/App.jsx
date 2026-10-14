@@ -1,19 +1,15 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Features from "./components/Features";
-import Process from "./components/Process";
-import Footer from "./components/Footer";
-import "./App.css";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes/Routes";
+
+import { AuthProvider } from "./contexts/AuthContext";
+import { ExplorationProvider } from "./contexts/ExplorationContext";
+import { AcademicProfileProvider } from './contexts/AcademicProfileContext';
 
 function App() {
     return (
-        <div className="app">
-            <Navbar />
-            <Hero />
-            <Features />
-            <Process />
-            <Footer />
-        </div>
+        <BrowserRouter>
+            <AuthProvider><AcademicProfileProvider><ExplorationProvider><AppRoutes /></ExplorationProvider></AcademicProfileProvider></AuthProvider>
+        </BrowserRouter>
     );
 }
 
