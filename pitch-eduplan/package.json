@@ -1,0 +1,23 @@
+{
+  "name": "eduplan-pitch",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "dev": "slidev --port 3030 --open",
+    "build": "slidev build",
+    "export:pdf": "slidev export --output exports/eduplan.pdf",
+    "export:png": "slidev export --format png --output exports/eduplan-png",
+    "export:pptx": "slidev export --format pptx --with-clicks false --output exports/eduplan.pptx",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "@slidev/cli": "53.0.0",
+    "@slidev/theme-default": "^0.25.0",
+    "@fontsource/dm-sans": "5.3.0",
+    "@fontsource/libre-baskerville": "5.3.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": { "playwright-chromium": "^1.58.0" }
+}
