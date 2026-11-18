@@ -8,7 +8,7 @@ const dir=new URL('../../.tools/tuition/',import.meta.url);mkdirSync(dir,{recurs
 const hashes={};
 for(const [id,doc] of Object.entries(review.documents)){
  const url=new URL(doc.source);if(url.origin!=='https://www.utadeo.edu.co')throw new Error('Fuente Tadeo no autorizada');
- const response=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(30000),headers:{'User-Agent':'EduPlan-tuition/1.0'}});
+ const response=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(30000),headers:{'User-Agent':'StuPlan-tuition/1.0'}});
  if(!response.ok)throw new Error(`HTTP ${response.status}`);
  const reader=response.body.getReader(),chunks=[];let size=0;
  try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>12_000_000)throw new Error('PDF demasiado grande');chunks.push(Buffer.from(value));}}finally{await reader.cancel();}

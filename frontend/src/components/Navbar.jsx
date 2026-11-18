@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import logoEduplan from "../assets/Images/EduPlanLogo.svg";
 
 const links = [
     ["Instituciones", "/instituciones"],
@@ -22,9 +21,9 @@ function Navbar() {
     return (
         <header className="site-header">
             <div className="container header-inner">
-                <Link className="brand" to="/" onClick={closeMenu}>
-                    <img src={logoEduplan} alt="Logo de EduPlan" />
-                    <div>EduPlan</div>
+                <Link className="brand" aria-label="StuPlan" to="/" onClick={closeMenu}>
+                    <img src="/favicon.svg" alt="" />
+                    <div>Stu<span>Plan</span></div>
                 </Link>
 
                 <nav

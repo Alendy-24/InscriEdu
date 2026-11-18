@@ -66,7 +66,7 @@ test('actual transport rejects private DNS before opening a connection', async (
 test('honors robots groups, longest matches, wildcards and allow precedence', () => {
   const policy=robotsPolicy('User-agent: *\nDisallow: /private\nAllow: /private/public\nDisallow: /*?page=\nCrawl-delay: 2\nSitemap: https://a.edu.co/map.xml');
   assert.equal(policy.allows('/private/x'),false); assert.equal(policy.allows('/private/public/x'),true); assert.equal(policy.allows('/programas?page=2'),false); assert.equal(policy.delay,2);
-  assert.equal(robotsPolicy('User-agent: Other\nDisallow: /\nUser-agent: EduPlanProgramLinks\nAllow: /').allows('/'),true);
+  assert.equal(robotsPolicy('User-agent: Other\nDisallow: /\nUser-agent: StuPlanProgramLinks\nAllow: /').allows('/'),true);
 });
 test('collector isolates failed sites, bounds discovery and downgrades two plausible URLs', async () => {
   const client={policy:async()=>({sitemaps:[]}),get:async value=>({status:200,url:value,headers:{'content-type':value.endsWith('.xml')?'application/xml':'text/html'},text:value.endsWith('.xml')?`<urlset><url><loc>${url}</loc></url><url><loc>${url}-alternativa</loc></url></urlset>`:html})};

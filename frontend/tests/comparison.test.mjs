@@ -57,14 +57,14 @@ test('highlights prioritize selected criteria without inventing differences from
 
 test('shared summaries preserve offering identity, unknowns and fallback context without personal data',()=>{
   const program={id:'upr9-nkiz:a',sourceId:'upr9-nkiz:a',code:'11',name:'Sistemas',institution:'Universidad Alfa',provenance:'real',comparisonState:'missing',periodCount:'8',periodicity:'Semestral',notes:'Nota privada',favorite:true};
-  const text=comparisonShareText([program],'https://eduplan.example');
+  const text=comparisonShareText([program],'https://stuplan.example');
   assert(text.includes('Duración publicada: 8 semestres'));
   assert(text.includes('Créditos académicos: Por confirmar'));
   assert(text.includes('Información guardada o pendiente'));
-  assert(text.includes('https://eduplan.example/programas/11?registro=upr9-nkiz%3Aa'));
+  assert(text.includes('https://stuplan.example/programas/11?registro=upr9-nkiz%3Aa'));
   assert(!text.includes('Nota privada'));
   assert(!text.includes('favorite'));
-  assert(comparisonShareText([{name:'Demo',provenance:'demo'}],'https://eduplan.example').includes('Datos ficticios'));
+  assert(comparisonShareText([{name:'Demo',provenance:'demo'}],'https://stuplan.example').includes('Datos ficticios'));
 });
 
 

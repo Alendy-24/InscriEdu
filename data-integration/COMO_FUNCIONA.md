@@ -1,14 +1,14 @@
-# Integración de datos educativos de EduPlan
+# Integración de datos educativos de StuPlan
 
 ## 1. Objetivo
 
-Este servicio consulta información pública oficial de instituciones y programas de educación superior en Colombia, transforma los nombres de las columnas externas a propiedades sencillas y devuelve JSON para EduPlan.
+Este servicio consulta información pública oficial de instituciones y programas de educación superior en Colombia, transforma los nombres de las columnas externas a propiedades sencillas y devuelve JSON para StuPlan.
 
 No almacena información. El backend Spring Boot consume este JSON y persiste los catálogos en PostgreSQL. La configuración y las limitaciones están en el [README principal](../README.md).
 
 ## 2. Flujo general
 
-1. Un cliente solicita un endpoint de EduPlan.
+1. Un cliente solicita un endpoint de StuPlan.
 2. La ruta valida filtros y paginación.
 3. El servicio construye una consulta Socrata.
 4. `fetch` consulta datos.gov.co con un tiempo máximo de espera.
@@ -157,13 +157,13 @@ Para `GET /api/programs?municipality=bogota&page=2&limit=10`:
 3. El servicio prepara el filtro sobre `nombremunicipioprograma` y contempla la variante `Bogotá`.
 4. Socrata recibe `$limit=10` y `$offset=10`.
 5. La respuesta oficial se transforma al modelo `Program`.
-6. EduPlan devuelve `data`, `page`, `limit` y `returned`.
+6. StuPlan devuelve `data`, `page`, `limit` y `returned`.
 
 ## 11. Qué no hace este servicio
 
 No implementa PostgreSQL, ORM, tablas, migraciones, usuarios, login, favoritos, recomendaciones, imágenes, Google Places, Wikimedia, Redis, Docker, autenticación, cron jobs ni sincronización automática. Tampoco modifica frontend, backend o database.
 
-## 12. Persistencia en EduPlan
+## 12. Persistencia en StuPlan
 
 Este servicio continúa sin conectarse directamente a PostgreSQL. Esa separación es intencional: Spring Boot consume sus endpoints y controla las transacciones, las relaciones y la actualización idempotente de los registros.
 

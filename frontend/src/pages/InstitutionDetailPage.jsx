@@ -167,7 +167,7 @@ export default function InstitutionDetailPage() {
                                 <p>
                                     {demo
                                         ? institution.summary
-                                        : "Los datos de esta institución provienen del catálogo público consultado por EduPlan. Para programas, admisiones y vida estudiantil, visita su sitio oficial."}
+                                        : "Los datos de esta institución provienen del catálogo público consultado por StuPlan. Para programas, admisiones y vida estudiantil, visita su sitio oficial."}
                                 </p>
                                 {institution.address && (
                                     <p>

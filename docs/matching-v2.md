@@ -1,4 +1,4 @@
-# Matching V2 · EduPlan
+# Matching V2 · StuPlan
 
 Versión `matching-v2.0`, implementada y auditada el 30 de septiembre de 2026. Sustituye el cálculo de [V1](personalized-recommendations.md); conserva la interfaz de [perfilamiento](profile-redesign.md).
 

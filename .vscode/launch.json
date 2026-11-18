@@ -3,7 +3,7 @@
   "configurations": [
     {
       "type": "java",
-      "name": "EduPlan Backend (adjuntar después de npm run dev)",
+      "name": "StuPlan Backend (adjuntar después de npm run dev)",
       "request": "attach",
       "hostName": "localhost",
       "port": 5005

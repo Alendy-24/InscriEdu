@@ -104,18 +104,18 @@ try {
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),route + ' at ' + width);
       await page.screenshot({path:out + '/' + route.split('?')[0].replaceAll('/','-') + '-' + width + '.png',fullPage:true});checks++;
       await page.locator('footer').scrollIntoViewIfNeeded();
-      const launcher = page.getByRole('button',{name:'Abrir asistente EduPlan',exact:true});
+      const launcher = page.getByRole('button',{name:'Abrir asistente StuPlan',exact:true});
       const count = network.length, scroll = await page.evaluate(()=>scrollY);
       await launcher.focus();await page.keyboard.press('Enter');
-      await page.getByRole('dialog',{name:'Asistente EduPlan',exact:true}).waitFor();
+      await page.getByRole('dialog',{name:'Asistente StuPlan',exact:true}).waitFor();
       assert(await page.getByLabel('Escribe tu pregunta',{exact:true}).isDisabled());assert(await page.getByRole('button',{name:'Enviar',exact:true}).isDisabled());
       const bounds = await page.locator('dialog').boundingBox();assert(bounds.x>=0 && bounds.x+bounds.width<=width && bounds.y>=0);
       assert.equal(network.length,count); await page.keyboard.press('Escape');
       assert.equal(await page.getByRole('dialog').count(),0);assert(await launcher.evaluate(el=>el===document.activeElement));assert.equal(await page.evaluate(()=>scrollY),scroll);
     }
-    await page.getByRole('button',{name:'Asistente EduPlan',exact:true}).click();await page.getByRole('dialog').waitFor();
+    await page.getByRole('button',{name:'Asistente StuPlan',exact:true}).click();await page.getByRole('dialog').waitFor();
     await page.screenshot({path:out+'/assistant-footer-'+width+'.png',fullPage:true});
-    await page.getByRole('button',{name:'Cerrar asistente EduPlan'}).click();assert(await page.getByRole('button',{name:'Asistente EduPlan',exact:true}).evaluate(el=>el===document.activeElement));
+    await page.getByRole('button',{name:'Cerrar asistente StuPlan'}).click();assert(await page.getByRole('button',{name:'Asistente StuPlan',exact:true}).evaluate(el=>el===document.activeElement));
   }
   const links = await page.locator('footer a[href^="/"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
   assert.deepEqual(links,['/','/instituciones','/programas','/becas','/guias','/dashboard','/perfil']);

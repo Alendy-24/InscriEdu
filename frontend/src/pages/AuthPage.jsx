@@ -21,7 +21,7 @@ export default function AuthPage({ mode = 'login' }) {
     finally { busy.current = false; if (!controller.signal.aborted) setLoading(false); }
   }
   if (user) return <Navigate to={destination} replace />;
-  return <main className="auth-main"><div className="auth-card"><h1>{register ? 'Crea tu cuenta' : 'Bienvenido a EduPlan'}</h1><p className="subtle">Organiza tus opciones y continúa explorando.</p><form className="auth-form" onSubmit={submit}>
+  return <main className="auth-main"><div className="auth-card"><h1>{register ? 'Crea tu cuenta' : 'Bienvenido a StuPlan'}</h1><p className="subtle">Organiza tus opciones y continúa explorando.</p><form className="auth-form" onSubmit={submit}>
     {register && <label className="field">Nombre completo<input name="name" autoComplete="name" required maxLength={120} /></label>}
     <label className="field">Correo electrónico<input name="email" type="email" autoComplete="email" required maxLength={register ? 80 : undefined} /></label>
     <label className="field">Contraseña<input name="password" type={showPassword ? 'text' : 'password'} autoComplete={register ? 'new-password' : 'current-password'} required minLength={register ? 8 : undefined} maxLength={register ? 72 : undefined} aria-describedby={error ? 'auth-error' : undefined} /></label>

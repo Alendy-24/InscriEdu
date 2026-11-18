@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';import {spawnSync} from 'node:child_proce
 import {extractReviewedCaldasTuition,CALDAS_SOURCE} from './caldas-reviewed-tuition.mjs';
 const review=JSON.parse(readFileSync(new URL('../data/caldas-reviewed-tuition-2026.json',import.meta.url)));
 const directory=new URL('../../.tools/tuition/',import.meta.url);mkdirSync(directory,{recursive:true});
-const response=await fetch(CALDAS_SOURCE,{redirect:'error',signal:AbortSignal.timeout(30000),headers:{'User-Agent':'EduPlan-tuition/1.0'}});
+const response=await fetch(CALDAS_SOURCE,{redirect:'error',signal:AbortSignal.timeout(30000),headers:{'User-Agent':'StuPlan-tuition/1.0'}});
 if(!response.ok)throw new Error(`HTTP ${response.status}`);
 const reader=response.body.getReader(),chunks=[];let size=0;
 try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>12_000_000)throw new Error('PDF demasiado grande');chunks.push(Buffer.from(value));}}finally{await reader.cancel();}

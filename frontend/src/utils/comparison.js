@@ -72,7 +72,7 @@ export function comparisonHighlights(programs, priorities = []) {
 }
 
 export function comparisonShareText(programs, origin) {
-  const lines = ['Mi comparación de programas · EduPlan', ''];
+  const lines = ['Mi comparación de programas · StuPlan', ''];
   programs.forEach((program,index) => {
     lines.push(`Opción ${String.fromCharCode(65 + index)}: ${comparisonValue(program.name) || 'Programa por confirmar'}`);
     if (program.provenance === 'demo') lines.push('Datos ficticios de demostración.');

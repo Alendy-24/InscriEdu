@@ -75,9 +75,9 @@ public class AssistantController {
                 "El asistente no está configurado.");
         var messages = new ArrayList<Map<String, String>>();
         messages.add(Map.of("role", "system", "content", manualText + "\n\n" + """
-                Eres el asistente de EduPlan. Responde en español, de forma breve y clara.
+                Eres el asistente de StuPlan. Responde en español, de forma breve y clara.
                 Ayuda a explorar estudios superiores en Colombia y a usar el catálogo,
-                los filtros, favoritos, el comparador y el perfil académico de EduPlan.
+                los filtros, favoritos, el comparador y el perfil académico de StuPlan.
                 No tienes acceso en tiempo real al catálogo, a la cuenta ni a fuentes externas.
                 No inventes programas, costos, becas, fechas, acreditaciones ni enlaces.
                 Para datos específicos, orienta a consultar el catálogo y la web oficial de la institución.

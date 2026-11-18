@@ -9,7 +9,7 @@ try {
   const base = process.env.SLIDEV_URL || 'http://localhost:3030'
   const errors = []
   page.on('pageerror', error => errors.push(error.message))
-  for (let slide = 1; slide <= 15; slide++) {
+  for (let slide = 1; slide <= 14; slide++) {
     await page.goto(base + '/' + slide + (slide === 1 ? '?clicks=1' : ''))
     const layout = page.locator('.slidev-page-' + slide + ' .slidev-layout').first()
     await layout.waitFor()
@@ -18,17 +18,17 @@ try {
       await image.evaluate(el => el.decode())
     }
     if (slide === 6 || slide === 7) {
-      const frame = page.frameLocator('iframe[title="EduPlan interactivo"]')
+      const frame = page.frameLocator('iframe[title="StuPlan interactivo"]')
       await frame.getByLabel('Correo electrónico', { exact: true }).waitFor()
     }
     if (slide === 8) {
-      await page.frameLocator('iframe[title="EduPlan interactivo"]').getByRole('heading', { name: 'Comparar programas' }).waitFor()
+      await page.frameLocator('iframe[title="StuPlan interactivo"]').getByRole('heading', { name: 'Comparar programas' }).waitFor()
       await page.getByRole('button', { name: 'Respaldo', exact: true }).click()
       await page.locator('.media-view video').waitFor()
       await page.getByRole('button', { name: 'Ver capturas', exact: true }).click()
       await page.locator('.media-view img').waitFor()
       await page.getByRole('button', { name: 'Volver a la app', exact: true }).click()
-      await page.frameLocator('iframe[title="EduPlan interactivo"]').getByRole('heading', { name: 'Comparar programas' }).waitFor()
+      await page.frameLocator('iframe[title="StuPlan interactivo"]').getByRole('heading', { name: 'Comparar programas' }).waitFor()
     }
     await layout.screenshot({ path: 'qa/redesign/slide-' + String(slide).padStart(2, '0') + '.png' })
     console.log('Diapositiva ' + slide + ' verificada')

@@ -105,7 +105,7 @@ export default function Landing() {
                             <h2>Oportunidades para explorar</h2>
                             <p>
                                 Accesos para seguir explorando en
-                                EduPlan.
+                                StuPlan.
                             </p>
                         </div>
                         <Link to="/programas">Ver programas →</Link>

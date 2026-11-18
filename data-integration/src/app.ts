@@ -19,7 +19,7 @@ app.use("/api/institutions", (request, response, next) => {
 });
 
 app.get("/health", (_request, response) => {
-  response.json({ status: "ok", service: "eduplan-data-integration" });
+  response.json({ status: "ok", service: "stuplan-data-integration" });
 });
 
 app.use("/api/institutions", institutionsRouter);

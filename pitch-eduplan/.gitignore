@@ -1,6 +1,7 @@
 node_modules/
 dist/
-exports/
+exports/*
+!exports/stuplan.pdf
 .slidev/
 qa/
 *.log

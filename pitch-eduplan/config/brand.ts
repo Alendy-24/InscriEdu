@@ -1,5 +1,5 @@
 export const brand = {
-  name: 'EduPlan',
+  name: 'StuPlan',
   promise: 'Descubrir lo que es para ti',
-  logo: '/brand/eduplan-lockup.png',
+  logo: '/brand/logo.svg',
 }

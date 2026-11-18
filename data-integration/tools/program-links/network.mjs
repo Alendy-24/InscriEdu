@@ -24,7 +24,7 @@ export async function fetchSafe(value, domains, { beforeRequest = async () => {}
     const pinned = addresses.find(item => item.family === 4) || addresses[0];
     const result = await new Promise((resolve, reject) => {
       const request = (url.protocol === 'https:' ? https : http).get(url, {
-        agent: false, headers: { 'User-Agent': 'EduPlanProgramLinks/1.0', 'Accept-Encoding': 'identity' },
+        agent: false, headers: { 'User-Agent': 'StuPlanProgramLinks/1.0', 'Accept-Encoding': 'identity' },
         lookup: (_host, options, callback) => callback(null, options.all ? [pinned] : pinned.address, pinned.family),
       }, response => {
         const chunks = []; let length = 0;
