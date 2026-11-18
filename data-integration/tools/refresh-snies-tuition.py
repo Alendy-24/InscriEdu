@@ -46,7 +46,7 @@ class Forms(HTMLParser):
 
 def download():
     opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
-    opener.addheaders = [('User-Agent', 'EduPlan-tuition/1.0 (official public catalog refresh)')]
+    opener.addheaders = [('User-Agent', 'StuPlan-tuition/1.0 (official public catalog refresh)')]
     with opener.open(SOURCE, timeout=60) as response:
         html = response.read(4_000_000).decode('utf-8')
     parser = Forms()

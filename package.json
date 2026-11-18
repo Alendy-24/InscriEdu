@@ -1,5 +1,5 @@
 {
-  "name": "eduplan-dev",
+  "name": "stuplan-dev",
   "private": true,
   "workspaces": [
     "frontend",

@@ -1,8 +1,9 @@
 ---
 theme: default
-title: EduPlan · Descubrir lo que es para ti
+title: StuPlan · Descubrir lo que es para ti
 titleTemplate: '%s'
-author: Equipo EduPlan
+favicon: /brand/logo.svg
+author: Equipo StuPlan
 lang: es
 aspectRatio: 16/9
 canvasWidth: 1280
@@ -21,20 +22,43 @@ class: story-cover
 <!--
 Presenta al equipo y abre con la idea de que el talento está en todas partes, aunque las oportunidades sean más difíciles de encontrar en algunos lugares.
 
-Apoyo para el expositor: 0:40. Invita a imaginar a dos estudiantes colombianos que están terminando el colegio. Ambos quieren estudiar una carrera. Presenta al equipo y abre la historia en la siguiente diapositiva. Las imágenes ilustran los escenarios de una historia ficticia. Bogotá: Seferaz, CC BY-SA 4.0. El Aguacatal: Javigu01, CC0 1.0. Fuentes y licencias: public/brand/story-credits.md.
+Apoyo para el expositor: 0:40. Invita a imaginar a dos estudiantes colombianos que están terminando el colegio. Ambos quieren estudiar una carrera. Presenta al equipo y abre la historia en la siguiente diapositiva. Los dos estudiantes de la siguiente diapositiva son personajes ficticios.
 -->
 
 ---
 class: story-paths
 ---
 
-<h1>Las oportunidades no llegan igual</h1><p class="story-lead">Dos realidades frente a una misma decisión.</p><div class="story-lanes"><section><div class="student-scene"><img src="/brand/story-bogota.jpg" alt="Patio escolar en Bogotá"><img src="/brand/story-urban.jpg" alt="Estudiantes en un taller escolar en Bogotá"></div><h2>En una ciudad</h2><ol><li>Consulta con orientación escolar.</li><li>Puede visitar instituciones cercanas.</li><li>Busca programas y apoyos.</li></ol></section><section><div class="student-scene"><img src="/brand/story-aguacatal.jpg" alt="Vereda El Aguacatal"><img src="/brand/story-rural.jpg" alt="Estudiantes de la escuela La Nubia en Apía"></div><h2>En una zona rural</h2><ol><li>Busca orientación a distancia.</li><li>Considera el costo de desplazarse.</li><li>Revisa programas y becas cuando tiene conexión.</li></ol></section></div><p class="story-source">28,7 puntos de brecha en nivel superior alcanzado · DANE ECV 2025, 17–21 años. Fotos: Seferaz (CC BY-SA 4.0) · Javigu01 (CC0) · Sintura conese (CC BY 4.0) · Quinaya Qumir (CC BY-SA 4.0).</p>
+<h1>Las oportunidades no llegan igual</h1>
+<p class="story-lead">Dos realidades frente a una misma decisión.</p>
+
+<div class="student-realities">
+  <section class="student-reality student-reality--rural">
+    <h2>En una zona rural</h2>
+    <ul>
+      <li>Busca orientación a distancia.</li>
+      <li>Calcula el costo del transporte.</li>
+      <li>Consulta becas cuando tiene conexión.</li>
+    </ul>
+  </section>
+  <img src="/brand/dos-realidades.png" alt="Dos estudiantes. Una flecha señala el transporte, la conexión y los costos. La otra señala la orientación y las instituciones cercanas.">
+  <section class="student-reality">
+    <h2>En una ciudad</h2>
+    <ul>
+      <li>Recibe orientación en su colegio.</li>
+      <li>Visita instituciones cercanas.</li>
+      <li>Explora programas y apoyos.</li>
+    </ul>
+  </section>
+</div>
+
+<p class="story-source">28,7 puntos de brecha en nivel superior alcanzado · DANE ECV 2025, 17–21 años.</p>
 
 <!--
 Compara los recorridos urbano y rural. Habla de orientación, distancias y conectividad como condiciones que pueden cambiar la búsqueda.
 
 Apoyo para el expositor: 0:40. DANE ECV 2025, tabla 12, p. 19: 44,7 % en cabeceras y 16,0 % en centros poblados y rural disperso. Indicador de nivel superior alcanzado, no causalidad. https://www.dane.gov.co/files/operaciones/ECV/bol-ECV-2025.pdf
-Narra en paralelo la búsqueda, la visita y la financiación. La estudiante rural tiene aspiraciones y capacidad de decisión. Sus circunstancias pueden exigir más tiempo o recursos para responder las mismas preguntas.
+Narra en paralelo la búsqueda, la visita y la financiación. El estudiante rural tiene aspiraciones y capacidad de decisión. Sus circunstancias pueden exigir más tiempo o recursos para responder las mismas preguntas.
 -->
 
 ---
@@ -54,10 +78,10 @@ class: story-bridge
 ---
 
 <h1>De la duda a una decisión informada</h1>
-<div class="problem-response"><section><h2>El problema</h2><p>Elegir cuesta más cuando los programas y los apoyos se consultan en lugares distintos.</p></section><span aria-hidden="true">→</span><section><h2>La respuesta de EduPlan</h2><p>Usar las preferencias del estudiante para enfocar la búsqueda y reunir programas, comparación y financiación.</p></section></div>
+<div class="problem-response"><section><h2>El problema</h2><p>Elegir cuesta más cuando los programas y los apoyos se consultan en lugares distintos.</p></section><span aria-hidden="true">→</span><section><h2>La respuesta de StuPlan</h2><p>Usar las preferencias del estudiante para enfocar la búsqueda y reunir programas, comparación y financiación.</p></section></div>
 
 <!--
-Cuando la información está dispersa, elegir cuesta. EduPlan reúne programas, comparación y apoyos, y permite explorar según preferencias.
+Cuando la información está dispersa, elegir cuesta. StuPlan reúne programas, comparación y apoyos, y permite explorar según preferencias.
 
 Apoyo para el expositor: Conecta la encuesta con el producto. La duda sobre qué estudiar orientó la búsqueda por intereses y la comparación. La poca claridad sobre financiación motivó un espacio para consultar apoyos y sus requisitos.
 -->
@@ -66,12 +90,12 @@ Apoyo para el expositor: Conecta la encuesta con el producto. La duda sobre qué
 class: story-product
 ---
 
-<div class="story-product-copy"><BrandMark variant="horizontal" /><h1>Descubrir lo que es para ti.</h1><p class="story-lead">De información dispersa a oportunidades educativas relevantes para ti.</p></div><figure><img src="/demo/programas.png" alt="Catálogo y filtros de programas en EduPlan"></figure>
+<div class="story-product-copy"><BrandMark variant="horizontal" /><h1>Descubrir lo que es para ti.</h1><p class="story-lead">De información dispersa a oportunidades educativas relevantes para ti.</p></div><figure><img src="/demo/programas.png" alt="Catálogo y filtros de programas en StuPlan"></figure>
 
 <!--
 La idea es pasar de buscar en varias fuentes a descubrir opciones relevantes desde un solo lugar.
 
-Apoyo para el expositor: 0:35. Revela EduPlan por primera vez como respuesta a la búsqueda dispersa. Señala el catálogo y los filtros de la captura real. Explica que las preferencias permiten enfocar la búsqueda.
+Apoyo para el expositor: 0:35. Revela StuPlan por primera vez como respuesta a la búsqueda dispersa. Señala el catálogo y los filtros de la captura real. Explica que las preferencias permiten enfocar la búsqueda.
 -->
 
 ---
@@ -83,7 +107,7 @@ class: demo-slide profile-demo
 <!--
 Con la sesión preparada, muestra intereses, nivel, ubicación y modalidad. Explica que esas preferencias ayudan a enfocar la búsqueda.
 
-Apoyo para el expositor: Abre el perfil en la misma ventana del público y prepara la sesión antes de proyectar. Muestra intereses, nivel, modalidad y ubicación. Con esos datos, EduPlan puede orientar la exploración. El acceso está protegido.
+Apoyo para el expositor: Abre el perfil en la misma ventana del público y prepara la sesión antes de proyectar. Muestra intereses, nivel, modalidad y ubicación. Con esos datos, StuPlan puede orientar la exploración. El acceso está protegido.
 -->
 
 ---
@@ -107,19 +131,7 @@ class: demo-slide profile-demo
 <!--
 Muestra dos programas preparados. Contrasta ubicación, modalidad y duración, y explica qué diferencia podría cambiar la decisión.
 
-Apoyo para el expositor: Antes de presentar, entra a Programas desde el selector de la demo, añade dos programas con Comparar y vuelve a Comparar. EduPlan guarda la selección por sesión de usuario o invitado en ese contexto del navegador. Ayuda al jurado a leer una diferencia que importe para su caso.
--->
-
----
-class: story-product story-scholarship
----
-
-<div class="story-product-copy"><h1>Las oportunidades también necesitan financiación</h1><p class="story-lead">Encuentra apoyos y revisa requisitos, vigencia y fuente oficial.</p></div><figure><img src="/demo/becas.png" alt="Sección real de becas de EduPlan"></figure>
-
-<!--
-Abre una beca y señala dónde verificar requisitos, vigencia y fuente oficial.
-
-Apoyo para el expositor: Muestra cómo consultar oportunidades de financiación y comprobar la fuente y las condiciones. Las preferencias orientan la exploración. La entidad convocante determina la elegibilidad.
+Apoyo para el expositor: Antes de presentar, entra a Programas desde el selector de la demo, añade dos programas con Comparar y vuelve a Comparar. StuPlan guarda la selección por sesión de usuario o invitado en ese contexto del navegador. Ayuda al jurado a leer una diferencia que importe para su caso.
 -->
 
 ---
@@ -138,7 +150,7 @@ Apoyo para el expositor: Estas dos cifras describen interés declarado. Cada per
 class: story-market
 ---
 
-<h1>El mercado que queremos alcanzar</h1><p class="story-lead">Mercado de usuarios · referencias provisionales</p><div class="market-layout"><div class="market-nested" role="img" aria-label="Esquema conceptual de TAM, SAM y SOM"><div class="market-tam"><b>TAM</b><strong>512.502</strong></div><div class="market-sam"><b>SAM</b><strong>44.847</strong></div><div class="market-som"><b>SOM</b><strong>≈ 450</strong></div></div><dl class="market-explain"><div><dt>TAM · Colombia</dt><dd>Alcance nacional de referencia. Estudiantes que aprobaron grado 11 en 2024.</dd></div><div><dt>SAM · Bogotá oficial</dt><dd>Segmento inicial de referencia. Matrícula oficial de grado 11 en noviembre de 2024.</dd></div><div><dt>SOM · Piloto</dt><dd>Meta inicial de usuarios para probar EduPlan.</dd></div></dl></div><p class="institution-market"><strong>Posibles clientes:</strong> colegios con grado 11 en Bogotá. Tamaño comercial y disposición a pagar pendientes de validar.</p><p class="story-source">MEN / SIMAT y SED Bogotá · Esquema conceptual sin escala. Aprobación y matrícula son poblaciones distintas.</p>
+<h1>El mercado que queremos alcanzar</h1><p class="story-lead">Mercado de usuarios · referencias provisionales</p><div class="market-layout"><div class="market-nested" role="img" aria-label="Esquema conceptual de TAM, SAM y SOM"><div class="market-tam"><b>TAM</b><strong>512.502</strong></div><div class="market-sam"><b>SAM</b><strong>44.847</strong></div><div class="market-som"><b>SOM</b><strong>≈ 450</strong></div></div><dl class="market-explain"><div><dt>TAM · Colombia</dt><dd>Alcance nacional de referencia. Estudiantes que aprobaron grado 11 en 2024.</dd></div><div><dt>SAM · Bogotá oficial</dt><dd>Segmento inicial de referencia. Matrícula oficial de grado 11 en noviembre de 2024.</dd></div><div><dt>SOM · Piloto</dt><dd>Meta inicial de usuarios para probar StuPlan.</dd></div></dl></div><p class="institution-market"><strong>Posibles clientes:</strong> colegios con grado 11 en Bogotá. Tamaño comercial y disposición a pagar pendientes de validar.</p><p class="story-source">MEN / SIMAT y SED Bogotá · Esquema conceptual sin escala. Aprobación y matrícula son poblaciones distintas.</p>
 
 <!--
 Colombia y Bogotá aportan referencias distintas de aprobaciones y matrícula. El piloto propone llegar a unos 450 usuarios.
@@ -155,33 +167,84 @@ class: story-school
 <h1>Los colegios también reciben valor</h1><div class="school-visual"><img src="/brand/story-bogota.jpg" alt="Patio escolar en Bogotá"><img src="/brand/story-urban.jpg" alt="Estudiantes en un taller escolar"></div><div class="school-outcomes"><p><strong>Colegio</strong><br>Herramientas de orientación para su cohorte de grado 11.</p><p><strong>Estudiantes</strong><br>Exploran programas, comparan opciones y descubren apoyos.</p></div>
 
 <!--
-Un colegio podría usar EduPlan para acompañar a su cohorte de grado once mientras cada estudiante explora sus opciones.
+Un colegio podría usar StuPlan para acompañar a su cohorte de grado once mientras cada estudiante explora sus opciones.
 
 Apoyo para el expositor: El colegio podría contratar una licencia o servicio por cohorte. Usa las fotos como contexto ilustrativo. No hay un contrato confirmado con las instituciones fotografiadas.
 -->
 
 ---
-class: story-campaign
+class: story-national
 ---
 
-<h1>Conectamos instituciones con estudiantes</h1><div class="campaign-layout"><div><h2>Universidades</h2><p>Podrían difundir programas, eventos y convocatorias mediante campañas.</p><h2>Entidades de financiación</h2><p>Las convocatorias públicas seguirían siendo informativas. La difusión patrocinada requeriría un acuerdo.</p><div class="funding-logos"><img src="/brand/icetex.webp" alt="ICETEX"><img src="/brand/atenea.webp" alt="Agencia Atenea"></div><small>Ejemplos de entidades que publican oportunidades.</small></div><figure class="campaign-photo"><img src="/brand/campus-orientacion.jpg" alt="Edificio Gerardo Arango en un campus universitario de Bogotá"><figcaption>Campus universitario en Bogotá · Felipe Restrepo Acosta, CC BY-SA 4.0</figcaption></figure></div><p class="story-source">Las campañas se identifican y quedan fuera del orden de recomendaciones por afinidad.</p>
+<h1>StuPlan ya funciona y puede escalar</h1>
+<p class="story-lead">Cualquier persona puede explorar el catálogo. El acceso es gratuito para estudiantes.</p>
+
+<div class="national-model">
+  <div class="national-triangle"><svg class="business-triangle" viewBox="0 0 1060 455" role="img" aria-labelledby="business-title business-description">
+  <title id="business-title">Triángulo del modelo de negocio de StuPlan</title>
+  <desc id="business-description">Cualquier persona puede explorar programas, comparar opciones y consultar becas gratis. StuPlan organiza información de fuentes oficiales con búsqueda y filtros. Las universidades podrían pagar por visibilidad para sus programas y eventos mediante campañas identificadas.</desc>
+  <path class="business-triangle-main" d="M530 58 315 264 530 318 745 264Z"/>
+  <path class="business-triangle-income" d="M315 264 530 318V435H137Z"/>
+  <path class="business-triangle-operation" d="M745 264 530 318V435H923Z"/>
+  <path class="business-triangle-dividers" d="M315 264 530 318 745 264M530 318V435"/>
+  <g class="business-triangle-copy">
+    <text x="530" y="151"><tspan x="530">Programas,</tspan><tspan x="530" dy="30">comparación y becas</tspan><tspan x="530" dy="30">en un solo lugar</tspan></text>
+    <text x="381" y="348"><tspan x="381">Campañas</tspan><tspan x="381" dy="28">universitarias</tspan><tspan x="381" dy="28">patrocinadas</tspan></text>
+    <text x="679" y="348"><tspan x="679">Fuentes oficiales</tspan><tspan x="679" dy="28">organizadas con</tspan><tspan x="679" dy="28">búsqueda y filtros</tspan></text>
+  </g>
+  <g class="business-triangle-node">
+    <circle cx="530" cy="66" r="49"/>
+    <text x="530" y="74">¿Qué?</text>
+    <circle cx="530" cy="282" r="59"/>
+    <text x="530" y="279">¿Quién?</text>
+    <text class="business-triangle-audience" x="530" y="304">Cualquier persona</text>
+    <circle cx="137" cy="402" r="49"/>
+    <text x="137" y="410">¿Por qué?</text>
+    <circle cx="923" cy="402" r="49"/>
+    <text x="923" y="410">¿Cómo?</text>
+  </g>
+</svg></div>
+  <section>
+    <h2>De Bogotá al país</h2>
+    <p>Proponemos un piloto con la Secretaría de Educación de Bogotá y replicarlo con alcaldías que quieran acercar StuPlan a sus estudiantes.</p>
+    <h2>Quién pagaría y por qué</h2>
+    <p>Las universidades podrían pagar por campañas identificadas para dar visibilidad a sus programas y eventos.</p>
+  </section>
+</div>
+
+<p class="technical-line"><strong>Cómo funciona.</strong> React muestra el catálogo del SNIES con filtros por municipio. Spring Boot gestiona las cuentas y PostgreSQL guarda sus datos.</p>
 
 <!--
-Universidades y entidades podrían difundir oportunidades. Una eventual campaña patrocinada se identificaría y quedaría separada de la afinidad.
+StuPlan funciona hoy: permite buscar y comparar programas y consultar becas. La propuesta de expansión es pilotear con la Secretaría de Educación de Bogotá y ofrecer el mismo modelo a otras alcaldías. El catálogo nacional permite ajustar la búsqueda por municipio sin construir un producto distinto para cada ciudad.
 
-Apoyo para el expositor: Describe dos hipótesis: campañas universitarias y difusión de convocatorias por acuerdo. Explica oralmente el flujo: la institución propone una convocatoria, EduPlan verifica su fuente y vigencia, y una eventual difusión patrocinada queda identificada. La foto ilustra un campus, sin implicar un acuerdo con esa universidad. La afinidad académica no se vende.
+Los convenios públicos son una vía propuesta de difusión y acompañamiento. Las campañas universitarias son la fuente comercial del escenario base. Se mostrarían como patrocinadas y quedarían fuera del orden de recomendaciones por afinidad.
 -->
 
 ---
-class: story-revenue
+class: story-financial
 ---
 
-<h1>Así podría generar ingresos EduPlan</h1><div class="revenue-flow"><div><b>Colegios e instituciones educativas</b><span>Licencia de EduPlan para ofrecer orientación con una cuenta por estudiante</span></div><div><b>Universidades</b><span>Campañas patrocinadas</span></div><div><b>Organizaciones de financiación</b><span>Acuerdos de difusión</span></div></div><div class="revenue-target"><strong>EduPlan</strong><span>→</span> Infraestructura · Datos · Desarrollo · Soporte · Crecimiento</div><p class="story-source">Tres vías comerciales por validar.</p>
+<h1>¿Cuándo se recupera la inversión?</h1>
+<p class="story-lead">Escenario ilustrativo a 24 meses · Cifras en pesos colombianos</p>
+
+<div class="financial-inputs">
+  <div><span>Inversión inicial</span><strong>$6 millones</strong><small>Preparación del piloto y lanzamiento</small></div>
+  <div><span>Costos fijos al mes</span><strong>$1 millón</strong><small>Infraestructura, mantenimiento y soporte</small></div>
+  <div><span>Precio por campaña</span><strong>$750.000</strong><small>$250.000 de costo directo · $500.000 de margen</small></div>
+</div>
+
+<div class="financial-results">
+  <div><strong>2 campañas/mes</strong><span>Punto de equilibrio operativo</span></div>
+  <div><strong>Mes 20</strong><span>Recuperación de la inversión</span></div>
+  <div><strong>+$700.316</strong><span>VPN a 24 meses · tasa del 1 % mensual</span></div>
+</div>
+
+<p class="financial-ramp"><strong>Ventas supuestas.</strong> 0 campañas en los meses 1–2, 2 al mes en los meses 3–4 y 3 al mes desde el mes 5.</p>
 
 <!--
-Una institución podría pagar una licencia para ofrecer una cuenta por estudiante. Campañas y acuerdos de difusión son otras vías por validar.
+La inversión de $6 millones se registra en el mes cero. Como ejemplo, se puede distribuir en $3 millones de ajustes y pruebas, $2 millones de preparación del piloto y $1 millón de contingencia. El precio de $750.000 y el costo directo de $250.000 dejan $500.000 por campaña para cubrir costos fijos. Dos campañas al mes cubren $1 millón de operación. En el escenario, el primer mes de equilibrio operativo es el 3.
 
-Apoyo para el expositor: Explica que una institución podría pagar una licencia del software y ofrecer una cuenta a cada estudiante para que explore programas, compare opciones y consulte apoyos. Describe cómo los ingresos financiarían la operación. No se han confirmado ventas ni patrocinadores.
+Flujo neto: −$1 millón al mes en los meses 1 y 2, $0 en los meses 3 y 4 y +$500.000 al mes desde el mes 5. El acumulado llega a cero en el mes 20. Al descontar los flujos a 1 % mensual, el VPN de 24 meses es $700.315,79. El ejercicio usa supuestos sin validar, antes de impuestos y sin valor residual. Los ingresos proyectados provienen de campañas universitarias. No se proyectan cobros por licencias ni ingresos de convenios públicos.
 -->
 
 ---

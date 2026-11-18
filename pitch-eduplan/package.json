@@ -1,5 +1,5 @@
 {
-  "name": "eduplan-pitch",
+  "name": "stuplan-pitch",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "slidev --port 3030 --open",
     "build": "slidev build",
-    "export:pdf": "slidev export --output exports/eduplan.pdf",
-    "export:png": "slidev export --format png --output exports/eduplan-png",
-    "export:pptx": "slidev export --format pptx --with-clicks false --output exports/eduplan.pptx",
+    "export:pdf": "slidev export --per-slide --output exports/stuplan.pdf",
+    "export:png": "slidev export --format png --output exports/stuplan-png",
+    "export:pptx": "slidev export --format pptx --with-clicks false --output exports/stuplan.pptx",
     "check": "node scripts/check.mjs"
   },
   "dependencies": {

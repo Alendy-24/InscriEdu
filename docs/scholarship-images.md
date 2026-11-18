@@ -1,4 +1,4 @@
-# Logos de las oportunidades de EduPlan
+# Logos de las oportunidades de StuPlan
 
 Consulta y revisión visual: **3 de noviembre de 2026, America/Bogota**.
 
@@ -8,7 +8,7 @@ La ampliación solicitada incorpora **25 recursos gráficos**, además de los tr
 
 `frontend/src/data/scholarship-logo-assets.json` registra por archivo: entidad, página que lo publica, URL original, fecha de consulta, bytes, SHA-256, transformación técnica y fondo necesario. El vínculo de La Sabana con su repositorio Widen y el de Externado con su biblioteca gráfica se verificaron en los encabezados de sus sitios oficiales; no se resolvieron mediante parecido de nombres. Las variantes de Icesi y UManizales son los iconos de marca publicados por sus propios sitios.
 
-Se usan como identificación editorial de las entidades responsables de las oportunidades. Las marcas conservan sus titulares y no se presenta afiliación o patrocinio de EduPlan. La publicación de un recurso no equivale a una licencia libre ni a autorización comercial general. Los términos de marca, incluidos los de EAFIT e ICETEX, no se convierten en una cesión de derechos mediante este registro. No se afirma haber obtenido permisos escritos de terceros ni se enviaron solicitudes en nombre del usuario.
+Se usan como identificación editorial de las entidades responsables de las oportunidades. Las marcas conservan sus titulares y no se presenta afiliación o patrocinio de StuPlan. La publicación de un recurso no equivale a una licencia libre ni a autorización comercial general. Los términos de marca, incluidos los de EAFIT e ICETEX, no se convierten en una cesión de derechos mediante este registro. No se afirma haber obtenido permisos escritos de terceros ni se enviaron solicitudes en nombre del usuario.
 
 Los SVG mantienen sus trazos y colores; COLFUTURO solo requirió declarar el namespace SVG para funcionar como archivo independiente. Los ráster se convierten a WebP sin pérdida, con reducción proporcional hasta 320 × 192 px. No se recortan marcas, eliminan leyendas, alteran colores ni incorporan fotografías. Las versiones blancas de COLFUTURO y Externado conservan sus colores sobre fondo azul marino. Los 25 archivos suman aproximadamente **276 kB**.
 
@@ -46,8 +46,8 @@ Los SVG mantienen sus trazos y colores; COLFUTURO solo requirió declarar el nam
 
 - **UTB:** archivo de Utb digital publicado en Wikimedia Commons bajo **CC BY-SA 4.0**. Se comprobó la identidad contra la noticia oficial de renovación de marca de septiembre de 2023. [Archivo y autoría](https://commons.wikimedia.org/wiki/File:Universidad_Tecnol%C3%B3gica_de_Bol%C3%ADvar.png) · [licencia](https://creativecommons.org/licenses/by-sa/4.0/). La reducción proporcional y conversión a WebP no cambian el diseño; la versión distribuida conserva esa licencia.
 - **Javeriana y UNAL:** se reutilizan `/logos/javeriana.jpg` y `/logos/unal.png`, con sus fuentes institucionales de la integración anterior. [Javeriana](https://www.javeriana.edu.co/institucional/escudo-sello-bandera) · [UNAL Bogotá](https://bogota.unal.edu.co/facultades).
-- **Unión Europea / Erasmus+:** `/logos/scholarships/eu-emblem.svg`, emblema conservado sin cambios según las [condiciones para terceros](https://www.eeas.europa.eu/sites/default/files/use-emblem_en.pdf). No se presenta a EduPlan como financiado por la Unión.
-- Los créditos públicos se sirven en `/logos/scholarships/credits.html`, enlazados desde Becas. Incluyen fuentes, derechos y atribución de UTB con enlace a la licencia. Los demás recursos no se etiquetan como Creative Commons ni como creaciones de EduPlan.
+- **Unión Europea / Erasmus+:** `/logos/scholarships/eu-emblem.svg`, emblema conservado sin cambios según las [condiciones para terceros](https://www.eeas.europa.eu/sites/default/files/use-emblem_en.pdf). No se presenta a StuPlan como financiado por la Unión.
+- Los créditos públicos se sirven en `/logos/scholarships/credits.html`, enlazados desde Becas. Incluyen fuentes, derechos y atribución de UTB con enlace a la licencia. Los demás recursos no se etiquetan como Creative Commons ni como creaciones de StuPlan.
 
 ## Comportamiento y revisión
 

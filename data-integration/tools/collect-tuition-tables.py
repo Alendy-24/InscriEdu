@@ -41,7 +41,7 @@ def get(url):
     if urllib.parse.urlsplit(url).netloc != 'www.uao.edu.co' or not url.startswith('https://'):
         raise ValueError('Fuente no autorizada')
     opener = urllib.request.build_opener(SameOriginRedirect())
-    request = urllib.request.Request(url, headers={'User-Agent': 'EduPlan-tuition/1.0'})
+    request = urllib.request.Request(url, headers={'User-Agent': 'StuPlan-tuition/1.0'})
     with opener.open(request, timeout=45) as response:
         content = response.read(12_000_001)
     if len(content) > 12_000_000:

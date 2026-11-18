@@ -1,4 +1,4 @@
-# Perfilamiento de EduPlan
+# Perfilamiento de StuPlan
 
 La estética y estructura descritas aquí se conservan. Orientación y formación evolucionaron con [Matching V2](matching-v2.md); la descripción de Orientación como función futura corresponde al rediseño inicial.
 

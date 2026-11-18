@@ -21,7 +21,7 @@ class AssistantControllerTest {
     private final AtomicReference<String> body = new AtomicReference<>();
     private final AtomicReference<String> authorization = new AtomicReference<>();
     private int upstreamStatus = 200;
-    private String upstreamBody = "{\"choices\":[{\"message\":{\"role\":\"assistant\",\"content\":\"Hola desde EduPlan\"}}]}";
+    private String upstreamBody = "{\"choices\":[{\"message\":{\"role\":\"assistant\",\"content\":\"Hola desde StuPlan\"}}]}";
 
     @BeforeEach void start() throws Exception {
         server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
@@ -42,7 +42,7 @@ class AssistantControllerTest {
         return new AssistantController.Question(List.of(new AssistantController.Message(role, "Quiero estudiar")));
     }
     @Test void callsProviderWithServerKeyAndSystemInstructions() {
-        assertEquals("Hola desde EduPlan", controller.answer(question("user")).get("reply"));
+        assertEquals("Hola desde StuPlan", controller.answer(question("user")).get("reply"));
         assertEquals("Bearer test-secret", authorization.get());
         assertTrue(body.get().contains("test-model"));
         assertTrue(body.get().contains("system"));
@@ -76,7 +76,7 @@ class AssistantControllerTest {
         var response = mvc.perform(post("/api/assistant/chat").contentType("application/json")
                 .content("{\"mensajes\":[{\"role\":\"user\",\"content\":\"Cómo comparo programas\"}],\"contexto\":{\"pantalla\":\"comparar\",\"params\":{}}}"))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-        assertTrue(response.contains("\"respuesta\":\"Hola desde EduPlan\""));
+        assertTrue(response.contains("\"respuesta\":\"Hola desde StuPlan\""));
         assertTrue(body.get().contains("pantalla comparar"));
         assertTrue(body.get().contains("sin Markdown"));
     }

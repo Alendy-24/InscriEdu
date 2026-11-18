@@ -1,4 +1,4 @@
-# Becas EduPlan · entrega de fase 2
+# Becas StuPlan · entrega de fase 2
 
 Referencia editorial: **3 de noviembre de 2026, America/Bogota**. Este informe registra la implementación y sus verificaciones; la publicación en Git se realiza posteriormente por instrucción del propietario.
 
@@ -28,7 +28,7 @@ La [relación auditable](scholarships-sources.md) contiene fuentes oficiales, fe
 
 ## Identidad visual
 
-`ScholarshipBrand` resuelve las **29 entidades** del catálogo por hosts oficiales revisados, no por semejanza de nombres. Reutiliza las imágenes locales de Javeriana y UNAL, y añade un SVG oficial del emblema europeo para Erasmus con condiciones de uso de terceros documentadas. No se presentan esas imágenes como patrocinio de EduPlan.
+`ScholarshipBrand` resuelve las **29 entidades** del catálogo por hosts oficiales revisados, no por semejanza de nombres. Reutiliza las imágenes locales de Javeriana y UNAL, y añade un SVG oficial del emblema europeo para Erasmus con condiciones de uso de terceros documentadas. No se presentan esas imágenes como patrocinio de StuPlan.
 
 En la ampliación visual posterior solicitada por el propietario se incorporaron 25 recursos adicionales: 28 de 29 entidades y 35 de 37 oportunidades tienen imagen local. MEXT conserva texto. Las marcas se identifican editorialmente, sin presentar afiliación ni una licencia libre inexistente; la documentación registra procedencias, derechos y créditos. [Procedencias, condiciones y limitaciones](scholarship-images.md).
 

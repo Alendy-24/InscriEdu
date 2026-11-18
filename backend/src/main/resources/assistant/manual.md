@@ -1,20 +1,20 @@
-# Manual del Asistente EduPlan
+# Manual del Asistente StuPlan
 
-> Base: rama `features-asistente` del repositorio EduPlan. Solo describe lo que existe en el código. Lo ambiguo está en la sección 8.
+> Base: rama `features-asistente` del repositorio StuPlan. Solo describe lo que existe en el código. Lo ambiguo está en la sección 8.
 
-## 1. Qué es EduPlan y a quién ayuda
+## 1. Qué es StuPlan y a quién ayuda
 
-EduPlan es una plataforma web que ayuda a jóvenes colombianos a explorar la educación superior: buscar **instituciones** y **programas** (datos públicos del Ministerio de Educación, MEN / SNIES), **compararlos**, conocer **becas y financiación**, leer **guías** y **noticias**, y recibir **recomendaciones** según un perfil académico.
+StuPlan es una plataforma web que ayuda a jóvenes colombianos a explorar la educación superior: buscar **instituciones** y **programas** (datos públicos del Ministerio de Educación, MEN / SNIES), **compararlos**, conocer **becas y financiación**, leer **guías** y **noticias**, y recibir **recomendaciones** según un perfil académico.
 
 Principios del contenido:
-- EduPlan **informa y orienta**; no inscribe, no admite y no gestiona postulaciones. Cada institución o entidad recibe las solicitudes en su propia plataforma.
+- StuPlan **informa y orienta**; no inscribe, no admite y no gestiona postulaciones. Cada institución o entidad recibe las solicitudes en su propia plataforma.
 - Los datos pueden estar desactualizados: siempre se recomienda confirmar con la institución o la fuente oficial.
 - Hay datos **de demostración** (ficticios): la "Universidad de demostración" (ruta `/instituciones/demo-javeriana`) y sus 5 programas de ejemplo. Avisan "Datos ficticios de demostración".
 
 ## 2. Mapa del sitio
 
 **Menú superior:** Instituciones · Programas · Becas · Guías. Sin sesión: botón **Iniciar sesión**. Con sesión: **Mi espacio**, **Mi perfil** y **Salir**. En celular el menú se abre con **Menú** (y se cierra con **Cerrar**).
-**Pie de página:** enlaces a Explorar (Instituciones, Programas, Becas, Guías), Tu espacio (Mi espacio, Mi perfil) y el botón **Asistente EduPlan**.
+**Pie de página:** enlaces a Explorar (Instituciones, Programas, Becas, Guías), Tu espacio (Mi espacio, Mi perfil) y el botón **Asistente StuPlan**.
 **Asistente:** botón redondo de chat (esquina inferior derecha). Solo responde con sesión iniciada; sin sesión muestra el enlace "Inicia sesión".
 
 | Pantalla | Ruta | Acceso | Para qué sirve |
@@ -83,7 +83,7 @@ Una dirección inexistente muestra "Página no encontrada" con el botón **Volve
 1. Filtra con **Buscar oportunidades** (beca, entidad o requisito), **Lugar de estudio** (Todos, En Colombia, Bogotá, Medellín y Valle de Aburrá, En el exterior) y **Nivel** (Pregrado, Posgrado).
 2. **Más filtros**: **Tipo de oportunidad** (Beca, Crédito, Apoyo), **Estado de la convocatoria** (Abiertas, Próximas, Consultar vigencia, Cerradas) y **Ordenar** (Abiertas y próximas primero, Nombre A–Z, Z–A).
 3. Cada tarjeta trae cobertura, fecha de cierre, **Requisitos principales** (desplegable), **Fuente oficial ↗**, **Términos (PDF) ↗** (si existe) y **Guardar**.
-4. Para postular, siempre se va a la fuente oficial: EduPlan no recibe solicitudes.
+4. Para postular, siempre se va a la fuente oficial: StuPlan no recibe solicitudes.
 - Estados: **Abierta** (la fuente recibe solicitudes y hay cierre futuro), **Próxima** (calendario anunciado, aún no abre), **Consultar vigencia** (revisar próxima convocatoria) y **Cerrada** (la fecha publicada ya pasó). El estado lo calcula la página según la fecha actual.
 - Es una **selección editorial** de 8 oportunidades, revisadas el **29 de septiembre de 2026**; no es un listado completo de becas de Colombia.
 
@@ -152,9 +152,9 @@ Tarjetas de noticias de fuentes RSS de: Universitaria Tecnológica de Santander 
 
 ## 6. Preguntas frecuentes
 
-**¿Tiene costo usar EduPlan?** El código no menciona cobros. Para costos de matrícula, EduPlan no los publica: hay que consultar a la institución.
+**¿Tiene costo usar StuPlan?** El código no menciona cobros. Para costos de matrícula, StuPlan no los publica: hay que consultar a la institución.
 
-**¿Puedo inscribirme o postularme desde EduPlan?** No. EduPlan solo orienta; cada institución o entidad recibe las solicitudes en su plataforma oficial (botón **Fuente oficial ↗** o **Sitio oficial de la institución ↗**).
+**¿Puedo inscribirme o postularme desde StuPlan?** No. StuPlan solo orienta; cada institución o entidad recibe las solicitudes en su plataforma oficial (botón **Fuente oficial ↗** o **Sitio oficial de la institución ↗**).
 
 **¿Por qué no veo el costo de un programa?** El catálogo del MEN no lo publica. Pestaña Costos del programa: pregunta por matrícula, derechos de inscripción, otros gastos y becas directamente a la institución.
 
@@ -180,7 +180,7 @@ Tarjetas de noticias de fuentes RSS de: Universitaria Tecnológica de Santander 
 
 **¿Esas becas siguen abiertas?** Las fechas pueden cambiar. Mira la etiqueta de estado de la tarjeta en `/becas` y confirma en la **Fuente oficial**.
 
-**¿Hay becas para el programa que me interesa?** EduPlan solo tiene esa selección. En el detalle de cada programa, la pestaña Costos sugiere preguntar a la institución por becas y descuentos.
+**¿Hay becas para el programa que me interesa?** StuPlan solo tiene esa selección. En el detalle de cada programa, la pestaña Costos sugiere preguntar a la institución por becas y descuentos.
 
 **¿Cómo cambio mi correo?** No se puede desde Mi perfil › Cuenta. Sí puedes cambiar nombre y teléfono (opcional).
 
@@ -202,7 +202,7 @@ Tarjetas de noticias de fuentes RSS de: Universitaria Tecnológica de Santander 
 
 **El asistente NO puede:**
 - Inscribir, postular ni modificar la cuenta o el perfil del usuario; solo explica cómo hacerlo.
-- Dar costos, puntajes de corte, fechas de admisión, planes de estudio ni requisitos de un programa concreto: EduPlan no los publica.
+- Dar costos, puntajes de corte, fechas de admisión, planes de estudio ni requisitos de un programa concreto: StuPlan no los publica.
 - Garantizar admisión, beca, empleabilidad ni "la mejor carrera". Las recomendaciones son orientativas.
 - Inventar instituciones, programas, becas, fechas, enlaces o funciones. Solo usa este manual y lo que le llegue en la conversación.
 - Pedir ni recibir contraseñas, documentos de identidad ni datos bancarios.
@@ -210,15 +210,15 @@ Tarjetas de noticias de fuentes RSS de: Universitaria Tecnológica de Santander 
 
 **Cuando no sabe:**
 1. Dilo con honestidad en una frase.
-2. Indica la pantalla de EduPlan más cercana (por ejemplo **Programas**, **Becas** o **Guías**).
+2. Indica la pantalla de StuPlan más cercana (por ejemplo **Programas**, **Becas** o **Guías**).
 3. Para datos oficiales (costos, requisitos, fechas, admisión): remite al botón **Sitio oficial de la institución ↗** o **Fuente oficial ↗**, o a contactar directamente a la institución.
 
 **Derivar según el caso:**
 - Quiere recomendaciones → completar el perfil (3.9) y abrir **Recomendaciones**.
 - Quiere decidir qué estudiar → **Guías** › "Elegir un área de estudio" y **Mi perfil › Orientación**.
 - Preguntas sobre financiación → **Becas** y guía "Preparar una postulación".
-- Falla técnica persistente (datos que no cargan, error del asistente) → reintentar o volver más tarde. EduPlan no muestra un canal de soporte o contacto humano (ver sección 8).
-- Preguntas fuera de la educación superior o de EduPlan → responde amablemente que solo puedes ayudar con eso y reorienta.
+- Falla técnica persistente (datos que no cargan, error del asistente) → reintentar o volver más tarde. StuPlan no muestra un canal de soporte o contacto humano (ver sección 8).
+- Preguntas fuera de la educación superior o de StuPlan → responde amablemente que solo puedes ayudar con eso y reorienta.
 
 **Estilo:** español, tono cercano, máximo 4 o 5 frases salvo que pidan más detalle. Da instrucciones con el nombre exacto de la pantalla y el botón. Si la pantalla requiere sesión y el usuario no la tiene, indícale primero iniciar sesión o registrarse. Recuerda que la información es orientativa y debe confirmarse con la institución.
 
@@ -228,7 +228,7 @@ Tarjetas de noticias de fuentes RSS de: Universitaria Tecnológica de Santander 
 2. **Pantalla `/noticias` y proxy:** la web llama directo a `http://localhost:8080/api/noticias`, y esa ruta no está en el proxy de `vite.config.js`. En producción hay que revisar que funcione.
 3. **Footer del asistente:** muestra "Próximamente" junto al botón, pero el asistente ya funciona (el panel dice "En pruebas"). ¿Qué estado comunicar a los usuarios?
 4. **Modelo:** el prompt original menciona Llama 4 vía Groq; `application.properties` configura `openai/gpt-oss-20b` en Groq. Confirmar cuál es el definitivo (no cambia este manual).
-5. **Costos de uso:** el código no menciona si EduPlan es gratuito. Confirmar antes de afirmarlo.
+5. **Costos de uso:** el código no menciona si StuPlan es gratuito. Confirmar antes de afirmarlo.
 6. **Teléfono en registro:** el backend acepta correo o teléfono, pero el formulario web solo pide nombre, correo y contraseña; el teléfono se añade luego en Mi perfil › Cuenta.
 7. **Detalles de datos:** la lista exacta de "Tipo de formación" por nivel proviene de `matching-v2.json` y no se verificó cada opción; para Posgrado se ven Especialización, Maestría y Doctorado y para Pregrado Técnico profesional, Tecnológico y Universitario (por confirmar).
 8. **Vigencia de becas:** los datos se revisaron el 29/09/2026 y se actualizan a mano en `frontend/src/data/scholarships.js`. Definir quién actualiza este manual cuando cambien.

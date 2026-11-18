@@ -1,6 +1,6 @@
-# EduPlan · Descubrir lo que es para ti
+# StuPlan · Descubrir lo que es para ti
 
-Pitch de 15 diapositivas en Slidev, formato 16:9. El arco comienza con dos situaciones ficticias, pasa por la evidencia del DANE y termina con una invitación a explorar la plataforma.
+Pitch de 14 diapositivas en Slidev, formato 16:9. El arco comienza con dos situaciones ficticias, pasa por la evidencia del DANE y termina con una invitación a explorar la plataforma.
 
 ## Presentar desde WSL
 
@@ -41,18 +41,18 @@ Ejecuta las exportaciones en secuencia. Ambas usan una captura en la diapositiva
 ## Evidencia y créditos
 
 - [DANE, ECV 2025, tabla 12, p. 19](https://www.dane.gov.co/files/operaciones/ECV/bol-ECV-2025.pdf). Nivel educativo superior alcanzado entre personas de 17 a 21 años.
-- [Triángulo de St. Gallen](https://alexandria.unisg.ch/entities/publication/ee4ea880-7b4a-44c1-842c-8f8c174b5543). El modelo B2B2C de EduPlan se presenta como hipótesis.
+- [Triángulo de St. Gallen](https://alexandria.unisg.ch/entities/publication/ee4ea880-7b4a-44c1-842c-8f8c174b5543). El modelo B2B2C de StuPlan se presenta como hipótesis.
 - [Fotografías y licencias](public/brand/story-credits.md). Las imágenes muestran un patio escolar de Bogotá y un paisaje rural del Valle del Cauca. Los recorridos narrados son ficticios.
 - Los porcentajes y sus denominadores se verificaron en el CSV original. Consulta [VALIDATION.md](VALIDATION.md).
 
 ## Verificar
 
-Con EduPlan y Slidev activos, `npm run check` recorre las 15 diapositivas y prueba la demo y su respaldo. `node scripts/check-demo.mjs` recorre las rutas públicas y verifica la redirección de perfil y recomendaciones al acceso.
+Con StuPlan y Slidev activos, `npm run check` recorre las 14 diapositivas y prueba la demo y su respaldo. `node scripts/check-demo.mjs` recorre las rutas públicas y verifica la redirección de perfil y recomendaciones al acceso.
 
 
 ## Identidad visual
 
-El logo original del brief está en `public/brand/eduplan-lockup.png`. `components/BrandMark.vue` presenta tres variantes: completa, horizontal e isotipo recortado mediante CSS. Para cambiar de marca, actualiza `config/brand.ts` y sustituye el recurso indicado por `logo`. Revisa también el título de Slidev y las menciones narrativas en `slides.md`.
+El isotipo de StuPlan está en `public/brand/logo.svg` y también se usa en la plataforma. `components/BrandMark.vue` lo presenta como marca completa, marca horizontal o isotipo.
 
 Los colores compartidos y las variantes de marca están en `styles/brand.css`. Las composiciones específicas de las escenas están en `styles/story.css`.
 
@@ -64,6 +64,6 @@ Los colores compartidos y las variantes de marca están en `styles/brand.css`. L
 
 ## Preparar la comparación en vivo
 
-Abre la diapositiva 8 en la vista del público. En el selector de EduPlan elige **Programas**, pulsa **Comparar** en dos opciones y selecciona **Comparar** en el mismo selector. La aplicación conserva la selección para esa cuenta o para el invitado en ese navegador. Ensaya en la misma ventana y con la misma cuenta que usarás al presentar. El PDF incluye una captura real de respaldo.
+Abre la diapositiva 8 en la vista del público. En el selector de StuPlan elige **Programas**, pulsa **Comparar** en dos opciones y selecciona **Comparar** en el mismo selector. La aplicación conserva la selección para esa cuenta o para el invitado en ese navegador. Ensaya en la misma ventana y con la misma cuenta que usarás al presentar. El PDF incluye una captura real de respaldo.
 
 

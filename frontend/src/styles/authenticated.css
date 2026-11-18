@@ -1,4 +1,4 @@
-/* Refinements of EduPlan's existing editorial language. */
+/* Refinements of StuPlan's existing editorial language. */
 .identity-header { display:flex; align-items:center; gap:26px; padding:14px 0 38px; border-bottom:1px solid var(--line-card); }
 .identity-header > div { flex:1; min-width:0; }
 .identity-header h1 { font-size:clamp(30px,3vw,44px); margin-bottom:12px; }

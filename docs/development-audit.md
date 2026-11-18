@@ -1,4 +1,4 @@
-# Auditoría del desarrollo local de EduPlan
+# Auditoría del desarrollo local de StuPlan
 
 Fecha: 30 de septiembre de 2026.
 

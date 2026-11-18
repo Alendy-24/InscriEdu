@@ -80,7 +80,7 @@ def main():
                 raise ValueError('Redirección no autorizada')
             return super().redirect_request(req, fp, code, msg, headers, newurl)
     opener = urllib.request.build_opener(NoRedirect())
-    with opener.open(urllib.request.Request(SOURCE, headers={'User-Agent': 'EduPlan-tuition/1.0'}), timeout=45) as response:
+    with opener.open(urllib.request.Request(SOURCE, headers={'User-Agent': 'StuPlan-tuition/1.0'}), timeout=45) as response:
         content = response.read(12_000_001)
     if len(content) > 12_000_000 or not content.startswith(b'%PDF'):
         raise ValueError('PDF ausente o demasiado grande')

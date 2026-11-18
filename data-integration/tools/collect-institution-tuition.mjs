@@ -20,7 +20,7 @@ if(selected&&!['unab','javeriana-cali','sena','libre','ean','ces','guajira'].inc
 async function get(url) {
   const parsed=new URL(url);
   if(!['https://uniguajira.edu.co','https://www.ces.edu.co','https://universidadean.edu.co','https://www.unilibre.edu.co','https://unab.edu.co','https://www.javerianacali.edu.co','https://ape.sena.edu.co','https://historico.sena.edu.co'].includes(parsed.origin))throw new Error('Dominio de recolección no autorizado');
-  const response=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(30000),headers:{'User-Agent':'EduPlan-tuition/1.0 (public official tuition research)'}});
+  const response=await fetch(url,{redirect:'error',signal:AbortSignal.timeout(30000),headers:{'User-Agent':'StuPlan-tuition/1.0 (public official tuition research)'}});
   if(!response.ok)throw new Error(`HTTP ${response.status}`);
   const reader=response.body.getReader(), chunks=[];let size=0;
   try {while(true){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>4_000_000)throw new Error('Documento demasiado grande');chunks.push(Buffer.from(value));}}

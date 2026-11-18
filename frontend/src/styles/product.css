@@ -1,4 +1,4 @@
-/* Shared refinements of the existing EduPlan layouts. */
+/* Shared refinements of the existing StuPlan layouts. */
 :root {
  --muted:#586779; --blue:#102653; --blue-dark:#102653; --blue-mid:#cdd7e4; --blue-soft:#eef3f8; --sky:#f1f5f9;
  --soft:#fafafa; --bg-tint:#fafaf9; --line-card:#dce1e7;
@@ -23,7 +23,8 @@ main { min-width:0; }
 .account-link { font-size:14px; text-decoration:none; min-height:44px; display:flex; align-items:center; }
 .header-inner { gap:24px; }
 .site-nav { gap:20px; }
-.brand img { width:48px; height:48px; }
+.brand img { width:48px; height:48px; object-fit:contain; }
+.brand > div > span { color:#1169b1; }
 .brand { font-size:24px; }
 .header-actions { flex-wrap:wrap; }
 .site-nav a { min-height:44px; }

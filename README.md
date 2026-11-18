@@ -1,4 +1,4 @@
-# Cómo ejecutar EduPlan con el asistente virtual
+# Cómo ejecutar StuPlan con el asistente virtual
 
 Guía para levantar el proyecto en un computador nuevo (Windows / PowerShell) con el chatbot funcionando.
 
@@ -15,8 +15,8 @@ Guía para levantar el proyecto en un computador nuevo (Windows / PowerShell) co
 ## 1. Clonar el repositorio
 
 ```powershell
-git clone https://github.com/Alendy-24/EduPlan
-cd EduPlan
+git clone https://github.com/Alendy-24/InscriEdu.git
+cd InscriEdu
 git checkout <rama-del-asistente>
 ```
 
@@ -89,7 +89,7 @@ assistant.model=openai/gpt-oss-20b
 
 Cierra la sesión y vuelve a entrar. Si usas WSL, puedes ejecutar
 `wsl --shutdown` en PowerShell y volver a abrir WSL. Estos son pasos manuales:
-EduPlan nunca ejecuta sudo ni modifica permisos.
+StuPlan nunca ejecuta sudo ni modifica permisos.
 
 ### Bases creadas con el flujo anterior
 
@@ -102,7 +102,7 @@ el volumen para resolver un error de contraseña. Consulta [Docker](docker/READM
 
 ## Arquitectura y funcionalidad
 
-EduPlan usa React/Vite y el catálogo real
+StuPlan usa React/Vite y el catálogo real
 de instituciones. Programas consulta data-integration; universidad, área, nivel,
 departamento, ciudad, modalidades, nivel de formación, tipo de institución y orden
 se aplican a todo el catálogo antes de paginar. Las modalidades admiten selección
@@ -249,7 +249,7 @@ cambiar programas a una URL de otro origen sin preparar ese transporte.
 
 # Diagrama de Clases
 
-<img width="848" height="646" alt="diagrama-de-clases-EduPlan" src="https://github.com/user-attachments/assets/f019621b-fc38-402c-8a10-9cfe1f6f1d98" />
+<img width="848" height="646" alt="diagrama-de-clases-StuPlan" src="https://github.com/user-attachments/assets/f019621b-fc38-402c-8a10-9cfe1f6f1d98" />
 
 # Diagrama Entidad-Relación
 
@@ -261,7 +261,7 @@ cambiar programas a una URL de otro origen sin preparar ese transporte.
 
 # Diagrama de Componentes 
 
-<img width="1667" height="886" alt="Diagrama_de_Componentes_EduPlan" src="https://github.com/user-attachments/assets/79628769-47d6-415b-9e11-fe3d106ece6b" />
+<img width="1667" height="886" alt="Diagrama_de_Componentes_StuPlan" src="https://github.com/user-attachments/assets/79628769-47d6-415b-9e11-fe3d106ece6b" />
 
 ### Matrícula en el comparador
 

@@ -15,7 +15,7 @@ export default function ComparisonShare({ programs }) {
   function download() {
     const url = URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'}));
     const link = document.createElement('a');
-    link.href=url; link.download='comparacion-eduplan.txt'; link.click();
+    link.href=url; link.download='comparacion-stuplan.txt'; link.click();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
     setMessage('Resumen descargado. Puedes enviarlo a quien te ayude a elegir.');
   }

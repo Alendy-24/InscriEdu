@@ -17,11 +17,11 @@ export const backupMedia: {
   capturedAt: string | null
 } = {
   captures: [
-    { src: '/demo/programas.png', label: 'Programas · filtro de pregrado', alt: 'Captura real del catálogo de programas de EduPlan con el filtro Pregrado seleccionado' },
-    { src: '/demo/comparacion.png', label: 'Comparación de programas', alt: 'Captura real del comparador de EduPlan con dos programas seleccionados' },
-    { src: '/demo/becas.png', label: 'Becas y oportunidades', alt: 'Captura real de la sección de becas y financiación de EduPlan' },
+    { src: '/demo/programas.png', label: 'Programas · filtro de pregrado', alt: 'Captura real del catálogo de programas de StuPlan con el filtro Pregrado seleccionado' },
+    { src: '/demo/comparacion.png', label: 'Comparación de programas', alt: 'Captura real del comparador de StuPlan con dos programas seleccionados' },
+    { src: '/demo/becas.png', label: 'Becas y oportunidades', alt: 'Captura real de la sección de becas y financiación de StuPlan' },
   ],
   video: '/demo/recorrido.webm',
   poster: '/demo/programas.png',
-  capturedAt: '2026-11-04',
+  capturedAt: '2026-11-11',
 }

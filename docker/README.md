@@ -7,7 +7,7 @@ inicia todos los servicios y publica la aplicación en http://localhost:3005.
 Lee los secretos del `.env` raíz. Consulta el [inicio rápido](../README.md).
 Las imágenes excluyen archivos `.env` y la clave de Groq se pasa solo al backend
 al ejecutar el contenedor. El asistente usa la [API de chat de Groq](https://console.groq.com/docs/text-chat).
-El modelo se cambia con `GROQ_MODEL`. Requiere una sesión iniciada de EduPlan.
+El modelo se cambia con `GROQ_MODEL`. Requiere una sesión iniciada de StuPlan.
 
 `docker compose down` detiene el stack conservando el volumen de PostgreSQL.
 No uses `down -v` si quieres conservar cuentas y datos.

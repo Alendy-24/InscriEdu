@@ -22,5 +22,5 @@ La respuesta sin intención de continuar estudiando se conserva en el denominado
 - [SNIES, estadísticas 2025](https://snies.mineducacion.gov.co/1778/w3-article-430063.html) describe matrícula en educación superior, con un universo distinto.
 - La meta de 450 usuarios corresponde al escenario piloto. La cifra de colegios con grado 11 que podrían contratar y su disposición a pagar siguen por validar.
 
-El PDF de referencia se revisó como diez páginas renderizadas porque su texto no era extraíble. La demo sigue usando las rutas reales de EduPlan y el respaldo del proyecto.
+El PDF de referencia se revisó como diez páginas renderizadas porque su texto no era extraíble. La demo sigue usando las rutas reales de StuPlan y el respaldo del proyecto.
 

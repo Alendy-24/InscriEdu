@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/EduPlan.iml" filepath="$PROJECT_DIR$/.idea/EduPlan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/StuPlan.iml" filepath="$PROJECT_DIR$/.idea/StuPlan.iml" />
       <module fileurl="file://$PROJECT_DIR$/backend/src/backend.iml" filepath="$PROJECT_DIR$/backend/src/backend.iml" />
     </modules>
   </component>

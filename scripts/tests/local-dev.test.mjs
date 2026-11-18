@@ -47,7 +47,7 @@ test('preflight rejects public-port conflicts before starting any services', asy
   await assert.rejects(preflight(fake), /El puerto 3005 ya está ocupado/);
   assert.equal(fake.calls.some(call => call.includes('up')), false);
 });
-test('only a running valid EduPlan PostgreSQL container may occupy 5433', async () => {
+test('only a running valid StuPlan PostgreSQL container may occupy 5433', async () => {
   await preflight(environment({busy:[5433],existing:container()}));
   const stopped=container();stopped.State.Running=false;
   await assert.rejects(preflight(environment({busy:[5433],existing:stopped})), /5433 ya está ocupado/);

@@ -48,7 +48,7 @@ export function dockerProblem(result, platform = process.platform) {
   if (/permission denied|access denied|access is denied/i.test(result.output)) {
     return 'Docker está instalado pero tu usuario no tiene acceso al daemon.' + (platform === 'win32'
       ? '\nComprueba el acceso a Docker Desktop con tu administrador.'
-      : '\nEn Linux/WSL normalmente se corrige agregando tu usuario al grupo docker:\nsudo usermod -aG docker $USER\nDespués cierra la sesión. En WSL desde PowerShell: wsl --shutdown\nVuelve a abrir WSL. EduPlan no ejecuta estos comandos.');
+      : '\nEn Linux/WSL normalmente se corrige agregando tu usuario al grupo docker:\nsudo usermod -aG docker $USER\nDespués cierra la sesión. En WSL desde PowerShell: wsl --shutdown\nVuelve a abrir WSL. StuPlan no ejecuta estos comandos.');
   }
   return 'Docker no responde. Inicia Docker Desktop o el daemon de Docker Engine y vuelve a ejecutar npm run doctor.';
 }
@@ -78,18 +78,18 @@ export function isManagedPostgres(container) {
 
 export async function preflight({ execute = run, available = portFree, env = process.env } = {}) {
   const errors = [];
-  console.log('EduPlan - entorno de desarrollo\n');
+  console.log('StuPlan - entorno de desarrollo\n');
   function check(ok, label, detail) {
     console.log(`${ok ? '✓' : '✗'} ${label}`);
     if (!ok) errors.push(detail);
   }
-  check(nodeCompatible(), 'Node', 'EduPlan requiere Node.js 20.19+ (20.x) o 22.12+. Se recomienda Node 24.');
+  check(nodeCompatible(), 'Node', 'StuPlan requiere Node.js 20.19+ (20.x) o 22.12+. Se recomienda Node 24.');
   const runtime = await execute(java('java', env), ['-version']);
   const compiler = await execute(java('javac', env), ['-version']);
   const major = Number(runtime.output.match(/version\s+"(\d+)/)?.[1]);
   const compilerMajor = Number(compiler.output.match(/javac\s+(\d+)/)?.[1]);
   check(runtime.ok && compiler.ok && major >= 21 && compilerMajor >= 21, 'Java 21+',
-    'Java no disponible o incompatible. EduPlan necesita JDK 21 o superior. Configura JAVA_HOME o el PATH (java y javac).');
+    'Java no disponible o incompatible. StuPlan necesita JDK 21 o superior. Configura JAVA_HOME o el PATH (java y javac).');
   let external = false;
   try { external = externalDatabase(env); } catch (error) { errors.push(error.message); }
   if (env.JWT_SECRET && (!/^[A-Za-z0-9+/]+={0,2}$/.test(env.JWT_SECRET)
@@ -109,13 +109,13 @@ export async function preflight({ execute = run, available = portFree, env = pro
         const container = JSON.parse(inspected.output)[0];
         const valid = isManagedPostgres(container);
         managed = valid && container.State?.Running === true;
-        if (!valid) errors.push('Existe eduplan-postgres pero no corresponde a la base administrada de EduPlan. No se modificará.');
+        if (!valid) errors.push('Existe eduplan-postgres pero no corresponde a la base administrada de StuPlan. No se modificará.');
       }
     }
   } else console.log('✓ Base externa configurada (Docker no requerido)');
   for (const port of [3005, 3001, 8080, ...(!external ? [5433] : []), ...(env.EDUPLAN_DEBUG === '1' ? [5005] : [])]) {
     if (!await available(port) && !(port === 5433 && managed)) {
-      errors.push(`El puerto ${port} ya está ocupado. Cierra la instancia anterior de EduPlan antes de iniciar otra.`);
+      errors.push(`El puerto ${port} ya está ocupado. Cierra la instancia anterior de StuPlan antes de iniciar otra.`);
     }
   }
   if (errors.length) throw new Error(errors.join('\n\n'));

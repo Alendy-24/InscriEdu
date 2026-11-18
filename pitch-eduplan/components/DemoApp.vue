@@ -51,14 +51,14 @@ function openRoute(event) {
 </script>
 
 <template>
-  <section class="product-demo" aria-label="Demostración de EduPlan">
+  <section class="product-demo" aria-label="Demostración de StuPlan">
     <header class="browser-bar">
       <div class="browser-tab">
         <BrandMark variant="horizontal" />
         
       </div>
       <template v-if="isAudience">
-        <select :value="path" aria-label="Ir a una sección de EduPlan" @change="openRoute">
+        <select :value="path" aria-label="Ir a una sección de StuPlan" @change="openRoute">
           <option v-for="route in demoRoutes" :key="route.path" :value="route.path">
             {{ route.label }}
           </option>
@@ -75,7 +75,7 @@ function openRoute(event) {
     </header>
 
     <div class="browser-view">
-      <div v-if="protectedView && !isAudience" class="protected-summary"><h2>{{ heading }}</h2><p>{{ initialPath === '/perfil' ? 'Intereses · Nivel académico · Ubicación · Modalidad' : 'Perfil académico → Afinidad explicada → Programas sugeridos' }}</p><p>Vista en vivo disponible con sesión en EduPlan.</p></div>
+      <div v-if="protectedView && !isAudience" class="protected-summary"><h2>{{ heading }}</h2><p>{{ initialPath === '/perfil' ? 'Intereses · Nivel académico · Ubicación · Modalidad' : 'Perfil académico → Afinidad explicada → Programas sugeridos' }}</p><p>Vista en vivo disponible con sesión en StuPlan.</p></div>
       <template v-else-if="!isAudience || backup">
         <div v-if="isAudience && showVideo && backupMedia.video" class="media-view">
           <video controls preload="metadata" :poster="backupMedia.poster || undefined" :src="backupMedia.video" @error="showVideo = false" />
@@ -89,11 +89,11 @@ function openRoute(event) {
         </div>
       </template>
       <template v-else-if="active">
-        <iframe v-if="status === 'ready'" :key="revision" :src="frameSrc" title="EduPlan interactivo" @error="status = 'unavailable'" />
+        <iframe v-if="status === 'ready'" :key="revision" :src="frameSrc" title="StuPlan interactivo" @error="status = 'unavailable'" />
         <div v-else class="browser-message" role="status">
-          <p v-if="status === 'loading'">Conectando con EduPlan…</p>
+          <p v-if="status === 'loading'">Conectando con StuPlan…</p>
           <template v-else>
-            <h2>EduPlan no responde en el puerto 3005</h2>
+            <h2>StuPlan no responde en el puerto 3005</h2>
             <p>Abre la aplicación por separado o muestra el recorrido grabado.</p>
             <button type="button" @click="revision++">Reintentar</button>
             <button type="button" @click="backup = true">Ver respaldo</button>
