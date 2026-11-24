@@ -1,3 +1,4 @@
+import { cachedRequest, conReintentos } from './local-cache.js';
 const PAGE_SIZE = 12;
 const baseUrl = (import.meta.env.VITE_DATA_INTEGRATION_URL ?? "").trim().replace(/\/+$/, "");
 
@@ -8,10 +9,12 @@ export async function getInstitutions(filters, page, signal) {
     }
 
     // El endpoint existente de data-integration consulta los catálogos públicos del MEN.
-    const response = await fetch(`${baseUrl}/api/institutions?${query}`, { signal });
+    const url = `${baseUrl}/api/institutions?${query}`;
+    const payload = await cachedRequest(url, requestSignal => conReintentos(async s => {
+    const response = await fetch(url, { signal: s });
     if (!response.ok) throw new Error("No fue posible consultar las instituciones");
-
-    const payload = await response.json();
+    return response.json();
+}, requestSignal), { signal });
     if (!Array.isArray(payload.data)) throw new Error("Respuesta de instituciones no válida");
 
     if (typeof payload.hasMore !== "boolean") throw new Error("Respuesta de paginación no válida");
@@ -21,9 +24,12 @@ export async function getInstitutions(filters, page, signal) {
 
 export async function getInstitutionByCode(code, signal) {
     if (!/^\d+$/.test(String(code))) throw new Error('Código de institución inválido');
-    const response = await fetch(`${baseUrl}/api/institutions/${encodeURIComponent(code)}`, { signal });
+    const url = `${baseUrl}/api/institutions/${encodeURIComponent(code)}`;
+    const institution = await cachedRequest(url, requestSignal => conReintentos(async s => {
+    const response = await fetch(url, { signal: s });
     if (!response.ok) throw new Error('No fue posible consultar el detalle de la institución');
-    const institution = await response.json();
+    return response.json();
+}, requestSignal), { signal });
     if (!institution || typeof institution.name !== 'string') throw new Error('Detalle de institución no válido');
     return institution;
 }

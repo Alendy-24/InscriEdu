@@ -89,7 +89,7 @@ export function getInstitutionCatalog(): Promise<Map<string, Institution>> {
     const rows = await fetchJson<InstitutionSourceRow[]>(url);
     if (!Array.isArray(rows) || rows.length >= 50000) throw new Error('Catálogo institucional incompleto');
     const data = new Map(rows.filter(row => /^\d+$/.test(row.c_digo_instituci_n ?? '')).map(row => [row.c_digo_instituci_n!, transformInstitution(row)]));
-    catalogCache = { data, expiresAt: Date.now() + 5 * 60 * 1000 };
+    catalogCache = { data, expiresAt: Date.now() + 6 * 60 * 60 * 1000 };
     return data;
   })().finally(() => { catalogRequest = undefined; });
   return catalogRequest;

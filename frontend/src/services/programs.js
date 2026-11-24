@@ -1,14 +1,19 @@
 import { normalizeProgramPage } from '../utils/programs.js';
+import { cachedRequest, conReintentos } from './local-cache.js';
 // Programs use the same-origin proxy; institutions keep their existing configurable URL.
 const baseUrl = '';
 export const PROGRAM_PAGE_SIZE = 12;
-async function requestPayload(path, signal) {
-  let response;
+async function fetchPayload(path, signal) {
+    let response;
   try { response = await fetch(`${baseUrl}${path}`, { signal }); }
   catch (error) { if (error.name === 'AbortError') throw error; throw new Error('No se pudo conectar al catálogo de programas. Revisa la conexión e inténtalo de nuevo.'); }
-  if (!response.ok) throw new Error(response.status === 404 ? 'Programa no encontrado.' : 'No pudimos consultar el catálogo de programas. Inténtalo de nuevo.');
+  if (!response.ok) throw Object.assign(new Error(response.status === 404 ? 'Programa no encontrado.' : 'No pudimos consultar el catálogo de programas. Inténtalo de nuevo.'), { noReintentar: response.status === 404 });
   const payload = await response.json().catch(() => { throw new Error('Respuesta de programas no válida'); });
   return payload;
+}
+
+function requestPayload(path, signal) {
+  return cachedRequest(path, requestSignal => conReintentos(s => fetchPayload(path, s), requestSignal), { signal });
 }
 export function getPrograms(filters, page, signal) {
   const query = new URLSearchParams({ page: String(page), limit: String(PROGRAM_PAGE_SIZE) });

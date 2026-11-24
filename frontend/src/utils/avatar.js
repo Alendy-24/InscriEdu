@@ -1,4 +1,4 @@
-export const AVATAR_MAX_BYTES = 5 * 1024 * 1024;
+export const AVATAR_MAX_BYTES = 6 * 60 * 60 * 1000;
 const MAX_STORED_LENGTH = 120000;
 export function userInitial(name) { return name?.match(/[\p{L}\p{N}]/u)?.[0].toLocaleUpperCase('es') || 'E'; }
 export function avatarKey(userId) { return Number.isInteger(userId) ? `eduplan-avatar-local-v1-user-${userId}` : null; }

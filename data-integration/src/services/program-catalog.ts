@@ -32,7 +32,7 @@ export function getProgramCatalog<T>(fields: string, transform: (row: T) => Prog
       programs.push(...rows.map(transform));
       if (rows.length < pageSize) {
         if (new Set(programs.map(program => program.sourceId)).size !== programs.length) throw new Error('La fuente cambió durante la consulta; reintenta.');
-        cache = { programs, expiresAt: Date.now() + 5 * 60 * 1000 };
+        cache = { programs, expiresAt: Date.now() + 6 * 60 * 60 * 1000 };
         return programs;
       }
     }
@@ -128,7 +128,7 @@ function programOfferKey(program: Program): string {
       : program.sourceId;
 }
 
-export function groupProgramOffers(programs: Program[]): Program[] {
+function buildProgramOffers(programs: Program[]): Program[] {
   const groups = new Map<string, Program[]>();
   for (const program of programs.filter(hasPublishedProgramName)) {
     // Only merge rows with an independently resolved SNIES identity and the
@@ -141,7 +141,12 @@ export function groupProgramOffers(programs: Program[]): Program[] {
     return { ...group[0], offerId: 'offer:' + createHash('sha256').update(programOfferKey(group[0])).digest('hex'), ...(group.length > 1 ? { groupedSourceIds: group.map(program => program.sourceId) } : {}) };
   });
 }
-
+const offersCache = new WeakMap<Program[], Program[]>();
+export function groupProgramOffers(programs: Program[]): Program[] {
+  let grouped = offersCache.get(programs);
+  if (!grouped) { grouped = buildProgramOffers(programs); offersCache.set(programs, grouped); }
+  return grouped;
+}
 export function searchProgramOffers(programs: Program[], filters: ProgramFilters): ProgramSearchPage {
   const ranked = rankedPrograms(groupProgramOffers(programs), filters.name ?? '');
   const matching = ranked.filter(({program}) => matchesFilters(program, filters));

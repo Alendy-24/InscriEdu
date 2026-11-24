@@ -123,14 +123,22 @@ export async function getPrograms(filters: ProgramFilters): Promise<Program[]> {
   return enrichInstitutions(selectPrograms(catalog, filters));
 }
 
+let enrichedCache: { source: Program[]; data: Program[] } | undefined;
+async function getEnrichedCatalog(catalog: Program[]): Promise<Program[]> {
+  if (enrichedCache?.source === catalog) return enrichedCache.data;
+  const data = await enrichInstitutions(catalog);
+  // Si falló el catálogo de instituciones no se guarda, para reintentar en la siguiente búsqueda.
+  if (!data.some(program => program.institutionEnrichmentUnavailable)) enrichedCache = { source: catalog, data };
+  return data;
+}
 export async function getProgramSearchPage(filters: ProgramFilters): Promise<ProgramSearchPage> {
   const catalog = await getProgramCatalog<ProgramSourceRow>(SELECT_FIELDS, transformProgram);
-  const enriched = await enrichInstitutions(catalog);
+  const enriched = await getEnrichedCatalog(catalog);
   if (filters.institutionSector && enriched.some(program => program.institutionEnrichmentUnavailable)) throw new Error('No fue posible confirmar el tipo de institución');
   return searchProgramOffers(enriched, filters);
 }
 
-const FILTER_CACHE_MS = 5 * 60 * 1000;
+const FILTER_CACHE_MS = 6 * 60 * 60 * 1000;
 let filterCache: { expiresAt: number; data: ProgramFilterOptions } | undefined;
 let filterRequest: Promise<ProgramFilterOptions> | undefined;
 
